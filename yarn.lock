@@ -2571,6 +2571,13 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.4"
 
+fbx2gltf@^0.9.7-p1:
+  version "0.9.7-p1"
+  resolved "https://registry.yarnpkg.com/fbx2gltf/-/fbx2gltf-0.9.7-p1.tgz#e68032ca19cdbd01a2270c341370d6434bae6b56"
+  integrity sha512-8S5rtp8fWCFjyHEQDTtrtXZOgvlzqkx3P1QsCptzvt9Ev3oRxRIaZ1XcXAQnfLoy1w3l/H8qhHdzDqZmVyhd9w==
+  dependencies:
+    rimraf "^2.6.2"
+
 fflate@^0.6.9:
   version "0.6.10"
   resolved "https://registry.yarnpkg.com/fflate/-/fflate-0.6.10.tgz#5f40f9659205936a2d18abf88b2e7781662b6d43"
@@ -4222,6 +4229,13 @@ reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+
+rimraf@^2.6.2:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.7.1.tgz#35797f13a7fdadc566142c29d4f07ccad483e3ec"
+  integrity sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==
+  dependencies:
+    glob "^7.1.3"
 
 rimraf@^3.0.2:
   version "3.0.2"

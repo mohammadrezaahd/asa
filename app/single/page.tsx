@@ -1,5 +1,6 @@
 'use client'
 
+import getConvertedFile from '@/api/convert'
 import dynamic from 'next/dynamic'
 import { Suspense, useState } from 'react'
 
@@ -26,31 +27,33 @@ export default function Page() {
   const [fileUrl, setFileUrl] = useState(null)
 
   const fileInputHandler = (e) => {
-    const asd = e.target.files[0]
-    const asdUrl = URL.createObjectURL(asd)
-    console.log('INPUTET FILE', asdUrl)
+    // const asd = e.target.files[0]
+    // const asdUrl = URL.createObjectURL(asd)
 
-    setFileUrl(asdUrl)
-    setIsFileExist(true)
+    // setFileUrl(asdUrl)
+    // setIsFileExist(true)
+
+    const data = getConvertedFile(e.target.files[0])
   }
 
   return (
     <>
       {(isFileExist && fileUrl && (
         <>
-          <div className='relative h-screen w-full md:mb-40'>
+          {/* <div className='relative h-screen w-full md:mb-40'>
             <View orbit className='relative h-screen'>
               <Suspense fallback={null}>
                 <Model scale={1} position={[0, -1.6, 0]} rotation={[0.0, -0.3, 0]} modelUrl={fileUrl} />
                 <Common color={'lightpink'} />
               </Suspense>
             </View>
-          </div>
+          </div> */}
+          AS
         </>
       )) || (
         <>
           <div>
-            <input type='file' onChange={fileInputHandler} />
+            <input type='file' accept='.fbx' onChange={fileInputHandler} />
           </div>
         </>
       )}
