@@ -6,28 +6,32 @@ import * as THREE from "three";
 const Lights = () => {
   const ambientRef = useRef<AmbientLight>(null);
 
-  useControls("Ambient Light", {
-    visible: {
-      value: false,
-      onChange: (v) => {
-        if (ambientRef.current) {
-          ambientRef.current.visible = v;
-        }
-      },
-    },
-    color: {
-      value: "#fff",
-      onChange: (v) => {
-        if (ambientRef.current) {
-          ambientRef.current.color = new THREE.Color(v);
-        }
-      },
-    },
+  // useControls("Ambient Light", {
+  //   visible: {
+  //     value: false,
+  //     onChange: (v) => {
+  //       if (ambientRef.current) {
+  //         ambientRef.current.visible = v;
+  //       }
+  //     },
+  //   },
+  //   color: {
+  //     value: "#fff",
+  //     onChange: (v) => {
+  //       if (ambientRef.current) {
+  //         ambientRef.current.color = new THREE.Color(v);
+  //       }
+  //     },
+  //   },
+  // });
+
+  const { ambientLightColor } = useControls({
+    ambientLightColor: "#fff",
   });
 
   return (
     <>
-      <ambientLight ref={ambientRef} />
+      <ambientLight ref={ambientRef} args={[ambientLightColor]} />
     </>
   );
 };
