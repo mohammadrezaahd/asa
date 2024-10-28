@@ -1,7 +1,8 @@
+import meshDetecter from "@/utils/meshDetecter";
 import { ThreeEvent, useLoader } from "@react-three/fiber";
 import { useControls } from "leva";
 import { FC } from "react";
-import { Mesh, MeshPhongMaterial } from "three";
+import { MeshPhongMaterial } from "three";
 import { FBXLoader } from "three/examples/jsm/Addons.js";
 
 interface IModelProps {
@@ -18,23 +19,10 @@ const Model: FC<IModelProps> = ({ fileUrl }) => {
   });
 
   const handleClick = (event: ThreeEvent<MouseEvent>) => {
-    const selectedMesh = event.object as Mesh;
-
-    if (selectedMesh.isMesh) {
-      const material = selectedMesh.material;
-
-      if (Array.isArray(material)) {
-        material.forEach((mat) => {
-          if (mat instanceof MeshPhongMaterial) {
-            mat.color.set("blue");
-          }
-        });
-      } else if (material instanceof MeshPhongMaterial) {
-        material.color.set("blue");
-      }
-
-      console.log("Selected Mesh:", selectedMesh);
-    }
+    const handleMaterial = (material: MeshPhongMaterial) => {
+      material.color.set("blue");
+    };
+    meshDetecter(event, handleMaterial);
   };
 
   return (
@@ -42,6 +30,10 @@ const Model: FC<IModelProps> = ({ fileUrl }) => {
       object={fbx}
       rotation={[rotationX, rotationY, rotationZ]}
       onClick={handleClick}
+      onMouseEnter={() => console.log("Mouse entered")}
+      onMouseLeave={() => {
+        console.log("Mouse left");
+      }}
     />
   );
 };
