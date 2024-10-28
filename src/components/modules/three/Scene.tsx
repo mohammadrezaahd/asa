@@ -1,4 +1,4 @@
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Model from "./Model";
 import { FC } from "react";
@@ -14,6 +14,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
       <Lights />
       <Model fileUrl={fileUrl} />
       <OrbitControls />
+      <PerspectiveCamera makeDefault position={[0, 0, 20]} />
     </Canvas>
   );
 };
