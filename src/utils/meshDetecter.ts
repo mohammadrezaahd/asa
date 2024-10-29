@@ -2,10 +2,10 @@ import { ThreeEvent } from "@react-three/fiber";
 import { Mesh, MeshPhongMaterial } from "three";
 
 const meshDetecter = (
-  event: ThreeEvent<MouseEvent>,
+  object: Mesh,
   handleMaterial: (material: MeshPhongMaterial) => void
 ) => {
-  const selectedMesh = event.object as Mesh;
+  const selectedMesh = object as Mesh;
 
   if (selectedMesh.isMesh) {
     const material = selectedMesh.material;
@@ -19,8 +19,6 @@ const meshDetecter = (
     } else if (material instanceof MeshPhongMaterial) {
       handleMaterial(material);
     }
-
-    console.log("Selected Mesh:", selectedMesh);
   }
 };
 
