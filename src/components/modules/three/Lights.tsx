@@ -1,52 +1,26 @@
-import { useControls } from "leva";
 import { useRef } from "react";
 import * as THREE from "three";
+import { ModelControls } from "./Controls";
+import { ILights } from "@/types/components/global/controls";
 
 const Lights = () => {
-  const ambientRef = useRef<THREE.AmbientLight>(null);
-  const directionalRef = useRef<THREE.DirectionalLight>(null);
+  const ambientLightRef = useRef<THREE.AmbientLight | null>(null);
+  const directionalLightRef = useRef<THREE.DirectionalLight | null>(null);
+  const pointLightRef = useRef<THREE.PointLight | null>(null);
 
-  useControls("Ambient Light", {
-    visible: {
-      value: true,
-      onChange: (v) => {
-        if (ambientRef.current) {
-          ambientRef.current.visible = v;
-        }
-      },
+  const lights: ILights[] = [
+    { label: "Ambient light", ref: ambientLightRef, element: <ambientLight /> },
+    {
+      label: "Directional light",
+      ref: directionalLightRef,
+      element: <directionalLight />,
     },
-    color: {
-      value: "#fff",
-      onChange: (v) => {
-        if (ambientRef.current) {
-          ambientRef.current.color = new THREE.Color(v);
-        }
-      },
-    },
-  });
-  useControls("Direct Light", {
-    visible: {
-      value: true,
-      onChange: (v) => {
-        if (directionalRef.current) {
-          directionalRef.current.visible = v;
-        }
-      },
-    },
-    color: {
-      value: "#fff",
-      onChange: (v) => {
-        if (directionalRef.current) {
-          directionalRef.current.color = new THREE.Color(v);
-        }
-      },
-    },
-  });
+    { label: "Point light", ref: pointLightRef, element: <pointLight /> },
+  ];
 
   return (
     <>
-      <ambientLight ref={ambientRef} />
-      <directionalLight ref={directionalRef} />
+      <ModelControls.LightControls lights={lights} />
     </>
   );
 };
