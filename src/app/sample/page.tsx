@@ -1,24 +1,20 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { Modules } from "@/components/modules";
+import FileInput from "@/components/modules/inputs/FileInput";
 
 const MyHome = () => {
   const [fileUrl, setFileUrl] = useState<string>();
-  const fileInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      return;
-    }
-    const file = e.target.files[0];
-    const fbxUrl = URL.createObjectURL(file);
 
-    setFileUrl(fbxUrl);
+  const fileInputHandler = (selectedFile: string) => {
+    setFileUrl(selectedFile);
   };
 
   return (
     <>
       {(fileUrl && <Modules.ModelViewer fileUrl={fileUrl} />) || (
-        <input type="file" accept=".fbx" onChange={fileInputHandler} />
+        <FileInput onFileSelect={fileInputHandler} />
       )}
     </>
   );
