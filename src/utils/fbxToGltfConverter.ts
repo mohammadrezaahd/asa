@@ -1,25 +1,55 @@
 import { FBXLoader, GLTFExporter } from "three/examples/jsm/Addons.js";
 
-const convertFBXToGLB = async (file: any) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
+const convertFBXToGLB = async (fileList: FileList): Promise<File[]> => {
+  const file = fileList[0];
 
-    reader.onload = function (event) {
-      const fbxLoader = new FBXLoader();
-      const fbx = fbxLoader.parse(event.target.result);
+  if (file.type === "model/vnd.fbx" || file.name.endsWith(".fbx")) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
 
-      const exporter = new GLTFExporter();
-      exporter.parse(fbx, (gltf) => {
-        const blob = new Blob([JSON.stringify(gltf)], {
-          type: "application/octet-stream",
-        });
-        resolve(URL.createObjectURL(blob));
-      });
-    };
+      reader.onload = function (event) {
+        const result = event.target?.result;
+        if (!result) {
+          reject(new Error("Failed to load the file."));
+          return;
+        }
 
-    reader.onerror = reject;
-    reader.readAsArrayBuffer(file);
-  });
+        const fbxLoader = new FBXLoader();
+        const fbx = fbxLoader.parse(result, "");
+
+        const exporter = new GLTFExporter();
+        exporter.parse(
+          fbx,
+          (gltf) => {
+            const blob = new Blob([JSON.stringify(gltf)], {
+              type: "model/gltf-binary",
+            });
+
+            const glbFile = new File([blob], "converted.glb", {
+              type: "model/gltf-binary",
+            });
+            resolve([glbFile]);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      };
+
+      reader.onerror = reject;
+      reader.readAsArrayBuffer(file);
+    });
+  } else if (
+    file.type === "model/gltf-binary" ||
+    file.name.endsWith(".gltf") ||
+    file.name.endsWith(".glb")
+  ) {
+    return Promise.resolve([file]);
+  } else {
+    throw new Error(
+      "Unsupported file format. Only FBX, GLTF, and GLB are supported."
+    );
+  }
 };
 
 export default convertFBXToGLB;

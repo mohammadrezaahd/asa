@@ -1,6 +1,4 @@
-import { ChangeEvent } from "react";
-
-const getFileUrl = (input: FileList) => {
+const getFileUrl = (input: FileList | File[]) => {
   if (!input) {
     return;
   }

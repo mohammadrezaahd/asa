@@ -4,13 +4,14 @@ import { FC, useEffect, useState } from "react";
 import { Mesh, MeshPhongMaterial, Object3D } from "three";
 import { FBXLoader } from "three/examples/jsm/Addons.js";
 import { ModelControls } from "./Controls";
+import { useGLTF } from "@react-three/drei";
 
 interface IModelProps {
   fileUrl: string;
 }
 
 const Model: FC<IModelProps> = ({ fileUrl }) => {
-  const fbx = useLoader(FBXLoader, fileUrl);
+  const { scene: model } = useGLTF(fileUrl);
 
   const [selectedMaterial, setSelectedMaterial] = useState<Object3D>();
   const [objColor, setObjColor] = useState("#fff");
@@ -41,7 +42,7 @@ const Model: FC<IModelProps> = ({ fileUrl }) => {
 
   return (
     <primitive
-      object={fbx}
+      object={model}
       rotation={[rotationX, rotationY, rotationZ]}
       position={[0, 0, 0]}
       onClick={handleClick}

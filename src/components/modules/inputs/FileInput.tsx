@@ -1,12 +1,12 @@
+import convertFBXToGLB from "@/utils/fbxToGltfConverter";
 import getFileUrl from "@/utils/getFileUrl";
 import React, { ChangeEvent, DragEvent, FC } from "react";
 
 interface IFilterInputProps {
-    onFileSelect: (file: string) => void
+  onFileSelect: (file: string) => void;
 }
 
-const FileInput:FC<IFilterInputProps> = ({ onFileSelect }) => {
-
+const FileInput: FC<IFilterInputProps> = ({ onFileSelect }) => {
   const dragOverHandler = (event: any) => {
     event.preventDefault();
   };
@@ -20,10 +20,11 @@ const FileInput:FC<IFilterInputProps> = ({ onFileSelect }) => {
     }
   };
 
-  const fileChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const fileChangeHandler = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files;
     if (file) {
-      const fileUrl = getFileUrl(file);
+      const convertedFile = await convertFBXToGLB(file);
+      const fileUrl = getFileUrl(convertedFile);
       if (fileUrl) {
         onFileSelect(fileUrl);
       }
@@ -71,6 +72,6 @@ const FileInput:FC<IFilterInputProps> = ({ onFileSelect }) => {
       </label>
     </div>
   );
-}
+};
 
 export default FileInput;
