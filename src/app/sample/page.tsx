@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Modules } from "@/components/modules";
-import FileInput from "@/components/modules/inputs/FileInput";
 
 const MyHome = () => {
   const [fileUrl, setFileUrl] = useState<string>();
@@ -14,7 +13,7 @@ const MyHome = () => {
   return (
     <>
       {(fileUrl && <Modules.ModelViewer fileUrl={fileUrl} />) || (
-        <FileInput onFileSelect={fileInputHandler} />
+        <Modules.FileInput onFileSelect={fileInputHandler} />
       )}
     </>
   );
