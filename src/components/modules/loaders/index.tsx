@@ -1,6 +1,6 @@
 import { useProgress } from "@react-three/drei";
 import { FC, useEffect, useState } from "react";
-import Basic from "./loading";
+import Basic from "./Basic";
 
 interface ILoadingProps {
   type?: "basic" | "spinner" | "progress";
