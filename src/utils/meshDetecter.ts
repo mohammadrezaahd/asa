@@ -1,9 +1,8 @@
-import { ThreeEvent } from "@react-three/fiber";
-import { Mesh, MeshPhongMaterial } from "three";
+import { Mesh, MeshPhongMaterial, MeshStandardMaterial, Material } from "three";
 
 const meshDetecter = (
   object: Mesh,
-  handleMaterial: (material: MeshPhongMaterial) => void
+  handleMaterial: (material: Material) => void
 ) => {
   const selectedMesh = object as Mesh;
 
@@ -12,11 +11,11 @@ const meshDetecter = (
 
     if (Array.isArray(material)) {
       material.forEach((mat) => {
-        if (mat instanceof MeshPhongMaterial) {
+        if (mat instanceof MeshPhongMaterial || mat instanceof MeshStandardMaterial) {
           handleMaterial(mat);
         }
       });
-    } else if (material instanceof MeshPhongMaterial) {
+    } else if (material instanceof MeshPhongMaterial || material instanceof MeshStandardMaterial) {
       handleMaterial(material);
     }
   }
