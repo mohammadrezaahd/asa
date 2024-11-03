@@ -1,26 +1,14 @@
-import { useRef } from "react";
-import * as THREE from "three";
-import { ModelControls } from "./Controls";
-import { ILights } from "@/types/components/global/controls";
+import { useModelControls } from "@/hooks/modelControlContext";
+import React from "react";
 
-const Lights = () => {
-  const ambientLightRef = useRef<THREE.AmbientLight | null>(null);
-  const directionalLightRef = useRef<THREE.DirectionalLight | null>(null);
-  const pointLightRef = useRef<THREE.PointLight | null>(null);
-
-  const lights: ILights[] = [
-    { label: "Ambient light", ref: ambientLightRef, element: <ambientLight /> },
-    {
-      label: "Directional light",
-      ref: directionalLightRef,
-      element: <directionalLight />,
-    },
-    { label: "Point light", ref: pointLightRef, element: <pointLight /> },
-  ];
-
+const Lights: React.FC = () => {
+  const { ambientLightRef, directionalLightRef, pointLightRef } =
+    useModelControls();
   return (
     <>
-      <ModelControls.LightControls lights={lights} />
+      <ambientLight ref={ambientLightRef} />
+      <directionalLight ref={directionalLightRef} />
+      <pointLight ref={pointLightRef} />
     </>
   );
 };

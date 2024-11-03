@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Modules } from "@/components/modules";
 
-const MyHome = () => {
+const ModelViewer = () => {
   const [fileUrl, setFileUrl] = useState<string>();
 
   const fileInputHandler = (selectedFile: string) => {
@@ -19,4 +19,4 @@ const MyHome = () => {
   );
 };
 
-export default MyHome;
+export default ModelViewer;

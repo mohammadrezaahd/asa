@@ -7,7 +7,7 @@ interface IFilterInputProps {
 }
 
 const FileInput: FC<IFilterInputProps> = ({ onFileSelect }) => {
-  const dragOverHandler = (event: any) => {
+  const dragOverHandler = (event: DragEvent<HTMLElement>) => {
     event.preventDefault();
   };
 

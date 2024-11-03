@@ -16,15 +16,17 @@ const Loading: FC<ILoadingProps> = ({ type = "basic" }) => {
     }
   }, [progress]);
 
-  switch (type) {
-    case "basic":
-      return <Basic />;
-    case "progress":
-      return <div></div>;
-    case "spinner":
-      return <div></div>;
-    default:
-      return <h1>LOADING</h1>;
+  if (isLoaded) {
+    switch (type) {
+      case "basic":
+        return <Basic />;
+      case "progress":
+        return <div></div>;
+      case "spinner":
+        return <div></div>;
+      default:
+        return <h1>LOADING</h1>;
+    }
   }
 };
 
