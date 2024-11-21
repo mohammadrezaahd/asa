@@ -1,25 +1,19 @@
 import environments from "@/helpers/configurations";
-import sql from "mssql";
+import mongoose from "mongoose";
 
-const serverConfig = environments.server;
-const config: sql.config = {
-  server: serverConfig.name ?? "",
-  database: serverConfig.db,
-  user: serverConfig.user,
-  password: serverConfig.password,
-  options: {
-    encrypt: true,
-    trustServerCertificate: true,
-  },
+const server = environments.server;
+
+const connectToDb = async () => {
+  try {
+    if (mongoose.connections[0].readyState) {
+      return true;
+    } else {
+      await mongoose.connect(server.db_url);
+      console.log("connected to database successfully");
+    }
+  } catch (err) {
+    console.log("database connection error =>", err);
+  }
 };
 
-export async function getDatabaseConnection() {
-  try {
-    const pool = await sql.connect(config);
-    console.log("Connected to database");
-    return pool;
-  } catch (err) {
-    console.error("Error connecting to database", err);
-    throw err;
-  }
-}
+export default connectToDb;
