@@ -15,6 +15,16 @@ const SampleTemplate = () => {
     }
   };
 
+  const handleConnectionCheck = async () => {
+    const res = await fetch("/api/connectionCheck");
+    const data = await res.json();
+    if (res.ok) {
+      console.log(data.message);
+    } else {
+      console.log(data.error);
+    }
+  };
+
   return (
     <>
       <div>
@@ -22,6 +32,9 @@ const SampleTemplate = () => {
       </div>
       <div className="border">
         <button onClick={handleCreateTable}>CLICK FOR CREATE TABLE</button>
+        <button className="bg-red-400" onClick={handleConnectionCheck}>
+          CLICK FOR CHECK CONNECTION
+        </button>
       </div>
     </>
   );

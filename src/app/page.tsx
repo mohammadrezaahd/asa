@@ -1,7 +1,6 @@
 "use client";
 import SampleTemplate from "@/components/templates/sample";
 import tables from "@/server/database/tables";
-import { Models } from "@/server/models";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -10,4 +9,3 @@ export default function Home() {
   }, []);
   return <SampleTemplate />;
 }
-  
