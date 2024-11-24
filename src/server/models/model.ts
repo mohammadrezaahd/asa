@@ -5,12 +5,12 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  price: {
-    type: Number,
+  path: {
+    type: String,
     required: true,
   },
 });
 
-const productSchema = { title: "Product", schema };
+const modelSchema = { title: "Model", schema };
 
-export default productSchema;
+export default modelSchema;

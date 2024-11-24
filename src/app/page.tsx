@@ -1,11 +1,13 @@
 "use client";
 import SampleTemplate from "@/components/templates/sample";
-import tables from "@/server/database/tables";
+import tables from "@/server/configs/tables";
+import getTable from "@/server/database/tables";
 import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
-    console.log(tables);
+    const asd = getTable("Model");
+    console.log(asd);
   }, []);
   return <SampleTemplate />;
 }

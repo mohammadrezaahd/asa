@@ -1,10 +1,16 @@
-import mongoose from "mongoose";
-import { Models } from "../models";
+import tables from "../configs/tables";
 
-const tables = Models.map((item) => {
-  const tableName = item.title;
-  const tableSchema = item.schema;
-  return mongoose.models?.tableName || mongoose.model(tableName, tableSchema);
-});
+const getTable = (tableName: string) => {
+  const filteredTable = tables.filter((table) => {
+    const name = Object.keys(table)[0];
+    return tableName === name;
+  });
 
-export default tables;
+  if (filteredTable.length >= 1) {
+    return Object.values(filteredTable[0])[0];
+  } else {
+    throw new Error("Selected model not found");
+  }
+};
+
+export default getTable;

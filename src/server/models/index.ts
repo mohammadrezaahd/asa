@@ -1,4 +1,3 @@
-import productSchema from "./product";
-import userSchema from "./user";
+import modelSchema from "./model";
 
-export const Models = [userSchema, productSchema];
+export const Models = [modelSchema];
