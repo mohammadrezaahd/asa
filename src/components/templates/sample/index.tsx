@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const SampleTemplate = () => {
   const [title, setTitle] = useState("");
-  const [path, setPath] = useState("");
+  const [file, setFile] = useState("");
 
   const handleCreateTable = async () => {
     try {
@@ -11,7 +11,7 @@ const SampleTemplate = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, path }),
+        body: JSON.stringify({ title, file }),
       });
       const data = await response.json();
       if (response.ok) {
@@ -48,9 +48,9 @@ const SampleTemplate = () => {
         />
         <input
           type="text"
-          placeholder="Path"
-          value={path}
-          onChange={(e) => setPath(e.target.value)}
+          placeholder="file"
+          value={file}
+          onChange={(e) => setFile(e.target.value)}
         />
         <button onClick={handleCreateTable}>CLICK FOR CREATE TABLE</button>
         <button className="bg-red-400" onClick={handleConnectionCheck}>

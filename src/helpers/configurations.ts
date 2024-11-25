@@ -7,6 +7,10 @@ const environments = {
     db_port: env.DB_PORT,
     db_name: env.DB_NAME,
   },
+  uri: {
+    base_url: env.BASE_URL,
+    api_url: env.API_URL,
+  },
 };
 
 export default environments;
