@@ -11,6 +11,10 @@ const environments = {
     base_url: env.BASE_URL,
     api_url: env.API_URL,
   },
+  storage: {
+    storage_directory: env.STORAGE_DIRECTORY,
+    storage_folder: env.STORAGE_FOLDER,
+  },
 };
 
 export default environments;
