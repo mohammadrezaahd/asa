@@ -6,7 +6,7 @@ const tables = Models.map((item) => {
   const tableSchema = item.schema;
   return {
     [tableName]:
-      mongoose.models?.tableName || mongoose.model(tableName, tableSchema),
+      mongoose.models[tableName] || mongoose.model(tableName, tableSchema),
   };
 });
 
