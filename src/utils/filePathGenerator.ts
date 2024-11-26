@@ -1,6 +1,6 @@
+import environments from "@/helpers/configurations";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
-import environments from "./configurations";
 
 const storage = environments.storage;
 

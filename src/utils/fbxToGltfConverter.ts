@@ -25,7 +25,11 @@ const convertFBXToGLB = async (fileList: FileList): Promise<File[]> => {
               type: "model/gltf-binary",
             });
 
-            const glbFile = new File([blob], "converted.glb", {
+            // استخراج نام فایل اصلی و اضافه کردن پسوند converted
+            const originalName = file.name.replace(/\.[^/.]+$/, "");
+            const glbFileName = `${originalName}-converted.glb`;
+
+            const glbFile = new File([blob], glbFileName, {
               type: "model/gltf-binary",
             });
             resolve([glbFile]);

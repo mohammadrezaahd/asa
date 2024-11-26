@@ -3,7 +3,7 @@ import getFileUrl from "@/utils/getFileUrl";
 import React, { ChangeEvent, DragEvent, FC } from "react";
 
 interface IFilterInputProps {
-  onFileSelect: (file: string) => void;
+  onFileSelect: (fileUrl: string, file: File) => void;
 }
 
 const FileInput: FC<IFilterInputProps> = ({ onFileSelect }) => {
@@ -11,12 +11,15 @@ const FileInput: FC<IFilterInputProps> = ({ onFileSelect }) => {
     event.preventDefault();
   };
 
-  const dropHandler = (event: DragEvent<HTMLElement>) => {
+  const dropHandler = async (event: DragEvent<HTMLElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files;
-    const fileUrl = getFileUrl(file);
-    if (fileUrl) {
-      onFileSelect(fileUrl);
+    if (file) {
+      const convertedFile = await convertFBXToGLB(file);
+      const fileUrl = getFileUrl(convertedFile);
+      if (fileUrl) {
+        onFileSelect(fileUrl, convertedFile[0]);
+      }
     }
   };
 
@@ -26,7 +29,7 @@ const FileInput: FC<IFilterInputProps> = ({ onFileSelect }) => {
       const convertedFile = await convertFBXToGLB(file);
       const fileUrl = getFileUrl(convertedFile);
       if (fileUrl) {
-        onFileSelect(fileUrl);
+        onFileSelect(fileUrl, convertedFile[0]);
       }
     }
   };

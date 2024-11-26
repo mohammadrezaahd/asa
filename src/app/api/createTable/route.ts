@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
 import connectToDb from "@/server/database/connection";
 import getTable from "@/server/database/tables";
-import filePathGenerator from "@/helpers/filePathGenerator";
 import environments from "@/helpers/configurations";
+import filePathGenerator from "@/utils/filePathGenerator";
 
 const STORAGE_FOLDER = environments.storage.storage_folder;
 const BASE_URL = environments.uri.base_url;
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
 
     const model = await modelsModel.create({
       title,
-      file: `${BASE_URL}/${STORAGE_FOLDER}/3dModels/${fileName}`,
+      file: `${STORAGE_FOLDER}/3dModels/${fileName}`,
     });
     console.log("MODEL", model);
     return Response.json(
