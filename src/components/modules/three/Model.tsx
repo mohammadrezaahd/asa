@@ -34,7 +34,7 @@ const Model: FC<IModelProps> = ({ fileUrl }) => {
     }
   }, [objColor, selectedMaterial]);
 
-  const handleClick = (event: ThreeEvent<MouseEvent>) => {
+  const meshSelectHandler = (event: ThreeEvent<MouseEvent>) => {
     setSelectedMaterial(event.object);
     meshDetecter(event.object as Mesh, (material: Material) => {
       if (
@@ -52,7 +52,7 @@ const Model: FC<IModelProps> = ({ fileUrl }) => {
         rotation={rotation}
         position={position}
         scale={scale}
-        onClick={handleClick}
+        onClick={meshSelectHandler}
       />
     </>
   );
