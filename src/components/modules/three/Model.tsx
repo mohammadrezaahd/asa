@@ -10,16 +10,18 @@ import {
 } from "three";
 import { useGLTF } from "@react-three/drei";
 import { useModelControls } from "@/hooks/modelControlContext";
+import { IOrbits } from "@/types/components/global/controls";
 
 interface IModelProps {
   fileUrl: string;
+  orbitControls: IOrbits;
 }
 
-const Model: FC<IModelProps> = ({ fileUrl }) => {
+const Model: FC<IModelProps> = ({ fileUrl, orbitControls }) => {
   const { scene: model } = useGLTF(fileUrl);
 
   const [selectedMaterial, setSelectedMaterial] = useState<Object3D>();
-  const { objColor, rotation, scale, position } = useModelControls();
+  const { objColor, scale } = useModelControls();
 
   useEffect(() => {
     if (selectedMaterial) {
@@ -41,16 +43,23 @@ const Model: FC<IModelProps> = ({ fileUrl }) => {
         material instanceof MeshPhongMaterial ||
         material instanceof MeshStandardMaterial
       ) {
-        material.color.set(objColor); // تنظیم رنگ انتخاب شده به objColor
+        material.color.set(objColor);
       }
     });
   };
+
+  useEffect(() => {
+    console.log("POSITION CHANGED ==>>", orbitControls.position);
+  }, [orbitControls.position]);
+  useEffect(() => {
+    console.log("ROTATION CHANGED ==>>", orbitControls.rotation);
+  }, [orbitControls.rotation]);
   return (
     <>
       <primitive
         object={model}
-        rotation={rotation}
-        position={position}
+        rotation={[0, 0, 0]}
+        position={[0, 0, 0]}
         scale={scale}
         onClick={meshSelectHandler}
       />

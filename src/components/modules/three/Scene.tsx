@@ -1,31 +1,44 @@
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { FC, useRef, useState } from "react";
+import { PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Model from "./Model";
-import { FC, useRef } from "react";
 import Lights from "./Lights";
-import { useModelControls } from "@/hooks/modelControlContext";
-import { OrbitControls as IOrbitControls } from "three-stdlib";
+import { ModelControls } from "@/hooks/modelControlContext";
+import { IOrbits } from "../../../types/components/global/controls";
+import { Euler, Vector3 } from "three";
+import CustomControls from "./CustomControls";
 
 interface ISceneProps {
   fileUrl: string;
 }
 
 const Scene: FC<ISceneProps> = ({ fileUrl }) => {
-  const { setRotation } = useModelControls();
-  const controlsRef = useRef<IOrbitControls>(null);
+  const [orbitControls, setOrbitControls] = useState<IOrbits>({
+    rotation: [-Math.PI / 2, 0, Math.PI],
+    position: [0, 0, 0],
+  });
 
-  const controlChangeHandler = () => {
-    if (controlsRef.current) {
-      const { x, y, z } = controlsRef.current.object.rotation;
-      setRotation([x, y, z]);
-    }
+  const controlChangeHandler = (newRotation: Euler, newPosition: Vector3) => {
+    setOrbitControls({
+      position: [newPosition.x, newPosition.y, newPosition.z],
+      rotation: [newRotation.x, newRotation.y, newRotation.z],
+    });
+    console.log("ROTATION =>", orbitControls.rotation);
+    console.log("POSITION =>", orbitControls.position);
   };
 
   return (
     <Canvas style={{ height: "100vh" }} shadows>
-      <Lights />
-      <Model fileUrl={fileUrl} />
-      <OrbitControls ref={controlsRef} onChange={controlChangeHandler} />
+      <ModelControls>
+        <Lights />
+        <group
+          position={orbitControls.position}
+          rotation={orbitControls.rotation}
+        >
+          <Model fileUrl={fileUrl} orbitControls={orbitControls} />
+        </group>
+      </ModelControls>
+      <CustomControls onChange={controlChangeHandler} />
       <PerspectiveCamera makeDefault position={[0, 0, 20]} />
     </Canvas>
   );

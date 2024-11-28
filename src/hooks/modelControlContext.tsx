@@ -1,14 +1,16 @@
-// hooks/ControlContext.ts
-import React, { FC, ReactNode, useContext, useRef, useState, useEffect } from "react";
+import React, {
+  FC,
+  ReactNode,
+  useContext,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
 import { useControls } from "leva";
 import * as THREE from "three";
 
 interface IControlContext {
-  rotation: [number, number, number];
-  setRotation: (rotation: [number, number, number]) => void;
   scale: number;
-  position: [number, number, number];
-  setPosition: (position: [number, number, number]) => void;
   objColor: string;
   setObjColor: (color: string) => void;
   ambientLightRef: React.RefObject<THREE.AmbientLight>;
@@ -22,29 +24,6 @@ const ControlContext = React.createContext<IControlContext | undefined>(
 
 const ModelControls: FC<{ children: ReactNode }> = ({ children }) => {
   const [objColor, setObjColor] = useState("#ffffff");
-  const [rotationState, setRotationState] = useState<[number, number, number]>([
-    -Math.PI / 2,
-    0,
-    Math.PI,
-  ]);
-  const [positionState, setPositionState] = useState<[number, number, number]>([
-    0,
-    0,
-    0,
-  ]);
-
-  const setRotation = (rotation: [number, number, number]) => {
-    setRotationState((prev) => {
-      rotationControls.x = rotation[0];
-      rotationControls.y = rotation[1];
-      rotationControls.z = rotation[2];
-      return rotation;
-    });
-  };
-
-  const setPosition = (position: [number, number, number]) => {
-    setPositionState(position);
-  };
 
   // Lights ref
   const ambientLightRef = useRef<THREE.AmbientLight>(new THREE.AmbientLight());
@@ -122,18 +101,8 @@ const ModelControls: FC<{ children: ReactNode }> = ({ children }) => {
   });
 
   // Model controls
-  const rotationControls = useControls("Model Rotation", {
-    x: { value: rotationState[0], min: -Math.PI, max: Math.PI, step: 0.01 },
-    y: { value: rotationState[1], min: -Math.PI, max: Math.PI, step: 0.01 },
-    z: { value: rotationState[2], min: -Math.PI, max: Math.PI, step: 0.01 },
-  });
 
   const scale = useControls("Model Scale", { value: 1 });
-  const positionControls = useControls("Model Position", {
-    x: { value: positionState[0], min: -10, max: 10, step: 0.1 },
-    y: { value: positionState[1], min: -10, max: 10, step: 0.1 },
-    z: { value: positionState[2], min: -10, max: 10, step: 0.1 },
-  });
 
   // Object color
   useControls("Object Color", {
@@ -143,20 +112,8 @@ const ModelControls: FC<{ children: ReactNode }> = ({ children }) => {
     },
   });
 
-  useEffect(() => {
-    setRotation([rotationControls.x, rotationControls.y, rotationControls.z]);
-  }, [rotationControls]);
-
-  useEffect(() => {
-    setPosition([positionControls.x, positionControls.y, positionControls.z]);
-  }, [positionControls]);
-
   const controls: IControlContext = {
-    rotation: [rotationControls.x, rotationControls.y, rotationControls.z],
-    setRotation,
     scale: scale.value,
-    position: [positionControls.x, positionControls.y, positionControls.z],
-    setPosition,
     objColor,
     setObjColor,
     ambientLightRef,
