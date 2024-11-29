@@ -10,4 +10,5 @@ export interface ILights {
 export interface IOrbits {
   rotation: [number, number, number];
   position: [number, number, number];
+  scale: number;
 }

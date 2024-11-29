@@ -1,16 +1,8 @@
-import React, {
-  FC,
-  ReactNode,
-  useContext,
-  useRef,
-  useState,
-  useEffect,
-} from "react";
+import React, { FC, ReactNode, useContext, useRef, useState } from "react";
 import { useControls } from "leva";
 import * as THREE from "three";
 
 interface IControlContext {
-  scale: number;
   objColor: string;
   setObjColor: (color: string) => void;
   ambientLightRef: React.RefObject<THREE.AmbientLight>;
@@ -100,10 +92,6 @@ const ModelControls: FC<{ children: ReactNode }> = ({ children }) => {
     },
   });
 
-  // Model controls
-
-  const scale = useControls("Model Scale", { value: 1 });
-
   // Object color
   useControls("Object Color", {
     color: {
@@ -113,7 +101,6 @@ const ModelControls: FC<{ children: ReactNode }> = ({ children }) => {
   });
 
   const controls: IControlContext = {
-    scale: scale.value,
     objColor,
     setObjColor,
     ambientLightRef,
