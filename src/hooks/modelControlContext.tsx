@@ -1,10 +1,15 @@
 import React, { FC, ReactNode, useContext, useRef, useState } from "react";
 import { useControls } from "leva";
 import * as THREE from "three";
+import FileInput from "@/components/modules/inputs/FileInput";
 
 interface IControlContext {
   objColor: string;
   setObjColor: (color: string) => void;
+  textInput: string;
+  setTextInput: (text: string) => void;
+  file: File | null;
+  setFile: (file: File | null) => void;
   ambientLightRef: React.RefObject<THREE.AmbientLight>;
   directionalLightRef: React.RefObject<THREE.DirectionalLight>;
   pointLightRef: React.RefObject<THREE.PointLight>;
@@ -16,6 +21,8 @@ const ControlContext = React.createContext<IControlContext | undefined>(
 
 const ModelControls: FC<{ children: ReactNode }> = ({ children }) => {
   const [objColor, setObjColor] = useState("#ffffff");
+  const [textInput, setTextInput] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
   // Lights ref
   const ambientLightRef = useRef<THREE.AmbientLight>(new THREE.AmbientLight());
@@ -23,6 +30,34 @@ const ModelControls: FC<{ children: ReactNode }> = ({ children }) => {
     new THREE.DirectionalLight()
   );
   const pointLightRef = useRef<THREE.PointLight>(new THREE.PointLight());
+
+  // Text input control
+  useControls("Model name", {
+    title: {
+      value: textInput,
+      onChange: (v) => setTextInput(v),
+    },
+  });
+
+  // File input control
+  useControls("File Input", {
+    file: {
+      value: 0,
+      onChange: (v) => {
+        if (v instanceof File) {
+          setFile(v);
+        }
+      },
+      inputType: "file",
+      component: (
+        <FileInput
+          onFileSelect={() => {
+            console.log("first");
+          }}
+        />
+      ),
+    },
+  });
 
   // Lights controls
   useControls("Ambient Light", {
@@ -103,6 +138,10 @@ const ModelControls: FC<{ children: ReactNode }> = ({ children }) => {
   const controls: IControlContext = {
     objColor,
     setObjColor,
+    textInput,
+    setTextInput,
+    file,
+    setFile,
     ambientLightRef,
     directionalLightRef,
     pointLightRef,

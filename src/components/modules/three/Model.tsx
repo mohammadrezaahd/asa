@@ -17,9 +17,8 @@ interface IModelProps {
 
 const Model: FC<IModelProps> = ({ fileUrl }) => {
   const { scene: model } = useGLTF(fileUrl);
-
   const [selectedMaterial, setSelectedMaterial] = useState<Object3D>();
-  const { objColor } = useModelControls();
+  const { objColor  } = useModelControls();
 
   useEffect(() => {
     if (selectedMaterial) {
