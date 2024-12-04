@@ -9,7 +9,6 @@ import {
   Object3D,
 } from "three";
 import { useGLTF } from "@react-three/drei";
-import { useModelControls } from "@/hooks/modelControlContext";
 
 interface IModelProps {
   fileUrl: string;
@@ -18,32 +17,31 @@ interface IModelProps {
 const Model: FC<IModelProps> = ({ fileUrl }) => {
   const { scene: model } = useGLTF(fileUrl);
   const [selectedMaterial, setSelectedMaterial] = useState<Object3D>();
-  const { objColor  } = useModelControls();
 
-  useEffect(() => {
-    if (selectedMaterial) {
-      meshDetecter(selectedMaterial as Mesh, (material: Material) => {
-        if (
-          material instanceof MeshPhongMaterial ||
-          material instanceof MeshStandardMaterial
-        ) {
-          material.color.set(objColor);
-        }
-      });
-    }
-  }, [objColor, selectedMaterial]);
+  // useEffect(() => {
+  //   if (selectedMaterial) {
+  //     meshDetecter(selectedMaterial as Mesh, (material: Material) => {
+  //       if (
+  //         material instanceof MeshPhongMaterial ||
+  //         material instanceof MeshStandardMaterial
+  //       ) {
+  //         material.color.set(objColor);
+  //       }
+  //     });
+  //   }
+  // }, [objColor, selectedMaterial]);
 
-  const meshSelectHandler = (event: ThreeEvent<MouseEvent>) => {
-    setSelectedMaterial(event.object);
-    meshDetecter(event.object as Mesh, (material: Material) => {
-      if (
-        material instanceof MeshPhongMaterial ||
-        material instanceof MeshStandardMaterial
-      ) {
-        material.color.set(objColor);
-      }
-    });
-  };
+  // const meshSelectHandler = (event: ThreeEvent<MouseEvent>) => {
+  //   setSelectedMaterial(event.object);
+  //   meshDetecter(event.object as Mesh, (material: Material) => {
+  //     if (
+  //       material instanceof MeshPhongMaterial ||
+  //       material instanceof MeshStandardMaterial
+  //     ) {
+  //       material.color.set(objColor);
+  //     }
+  //   });
+  // };
 
   return (
     <>
@@ -52,7 +50,7 @@ const Model: FC<IModelProps> = ({ fileUrl }) => {
         rotation={[0, 0, 0]}
         position={[0, 0, 0]}
         scale={1}
-        onClick={meshSelectHandler}
+        // onClick={meshSelectHandler}
       />
     </>
   );

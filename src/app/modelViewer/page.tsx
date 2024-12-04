@@ -22,18 +22,9 @@ const ModelViewer = () => {
 
   return (
     <>
-      <div>
-        <input
-          type="text"
-          placeholder="File title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
       {(fileUrl && <Modules.ModelViewer fileUrl={fileUrl} />) || (
         <Modules.FileInput onFileSelect={fileInputHandler} />
       )}
-      <button onClick={submitModelHandler}>SUBMIT</button>
     </>
   );
 };
