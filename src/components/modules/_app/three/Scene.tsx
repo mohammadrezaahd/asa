@@ -2,10 +2,11 @@ import { FC, useState } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Model from "./Model";
-import Lights from "./Lights";
+// import Lights from "./Lights";
 import { Euler, Vector3 } from "three";
 import CustomControls from "./CustomControls";
 import { IOrbits } from "@/types/components/global/controls";
+import ModelToolbar from "@/components/templates/admin/modelViewer/toolbar";
 
 interface ISceneProps {
   fileUrl: string;
@@ -32,6 +33,8 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
 
   return (
     <>
+      <ModelToolbar />
+
       <Canvas style={{ height: "100vh" }} shadows>
         {/* <Lights /> */}
         <group

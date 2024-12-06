@@ -1,17 +1,17 @@
-import React from "react";
+import { useState } from "react";
 import { Input, IconButton, Typography } from "@material-tailwind/react";
 
 const NumberAmountButtons = () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   return (
-    <div className="w-80">
+    <div className="w-100">
       <Typography
         variant="small"
         color="blue-gray"
         className="mb-1 font-medium"
       >
-        Select Amount
+        Rotation
       </Typography>
       <div className="relative w-full">
         <Input
@@ -57,9 +57,6 @@ const NumberAmountButtons = () => {
           </IconButton>
         </div>
       </div>
-      <Typography variant="small" color="gray" className="mt-2 font-normal">
-        Adjust the number using the + and - controls.
-      </Typography>
     </div>
   );
 };

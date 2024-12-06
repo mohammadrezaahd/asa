@@ -57,7 +57,7 @@ const DragComponents: React.FC<DragComponentsProps> = ({
 
   return (
     <div
-      className="relative w-full h-screen overflow-hidden"
+      className="absolute overflow-hidden z-50"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,

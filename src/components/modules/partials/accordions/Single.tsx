@@ -35,7 +35,7 @@ const SingleAccordion: FC<ISingleAccordionProps> = ({
   }, [toggleElementRef]);
 
   return (
-    <Accordion open={whichOpen === 1} className="bg-white w-1/5">
+    <Accordion open={whichOpen === 1} className="bg-white rounded-lg">
       <AccordionHeader>{header}</AccordionHeader>
       <AccordionBody>{body}</AccordionBody>
     </Accordion>
