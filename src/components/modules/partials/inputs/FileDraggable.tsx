@@ -6,7 +6,7 @@ interface IFilterInputProps {
   onFileSelect: (fileUrl: string, file: File) => void;
 }
 
-const FileInput: FC<IFilterInputProps> = ({ onFileSelect }) => {
+const FileDraggable: FC<IFilterInputProps> = ({ onFileSelect }) => {
   const dragOverHandler = (event: DragEvent<HTMLElement>) => {
     event.preventDefault();
   };
@@ -69,4 +69,4 @@ const FileInput: FC<IFilterInputProps> = ({ onFileSelect }) => {
   );
 };
 
-export default FileInput;
+export default FileDraggable;

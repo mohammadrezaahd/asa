@@ -57,16 +57,14 @@ const DragComponents: React.FC<DragComponentsProps> = ({
 
   return (
     <div
-      className="relative w-full h-screen bg-gray-100 overflow-hidden"
+      className="relative w-full h-screen overflow-hidden"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
         userSelect: "none",
       }}
     >
-      <div className="absolute bg-white p-4 rounded-lg shadow-lg cursor-grab">
-        {children}
-      </div>
+      {children}
     </div>
   );
 };

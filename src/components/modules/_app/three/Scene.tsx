@@ -3,9 +3,9 @@ import { PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Model from "./Model";
 import Lights from "./Lights";
-import { IOrbits } from "../../../types/components/global/controls";
 import { Euler, Vector3 } from "three";
 import CustomControls from "./CustomControls";
+import { IOrbits } from "@/types/components/global/controls";
 
 interface ISceneProps {
   fileUrl: string;

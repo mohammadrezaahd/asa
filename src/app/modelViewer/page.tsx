@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Modules } from "@/components/modules";
 import { TDModelsApi } from "@/api/TDModels";
+import { Inputs } from "@/components/modules/partials/inputs";
+import ModelViewer from "@/components/modules/_app/three";
 
-const ModelViewer = () => {
+const CreateModel = () => {
   const [fileUrl, setFileUrl] = useState<string>("");
   const [file, setFile] = useState<File>();
   const [title, setTitle] = useState<string>("");
@@ -22,11 +23,11 @@ const ModelViewer = () => {
 
   return (
     <>
-      {(fileUrl && <Modules.ModelViewer fileUrl={fileUrl} />) || (
-        <Modules.FileInput onFileSelect={fileInputHandler} />
+      {(fileUrl && <ModelViewer fileUrl={fileUrl} />) || (
+        <Inputs.FileDraggable onFileSelect={fileInputHandler} />
       )}
     </>
   );
 };
 
-export default ModelViewer;
+export default CreateModel;
