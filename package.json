@@ -17,7 +17,6 @@
     "eslint": "^8.0.0",
     "eslint-config-next": "^14.2.15",
     "fbx2gltf": "^0.9.7-p1",
-    "leva": "^0.9.34",
     "mongoose": "^8.8.2",
     "multer": "^1.4.5-lts.1",
     "next": "14.2.15",
