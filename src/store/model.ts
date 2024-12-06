@@ -3,10 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface ITDModelState {
   rotation: [number, number, number];
+  position: [number, number, number];
+  scale: number;
 }
 
 const initialState: ITDModelState = {
-  rotation: [0, 0, 0],
+  rotation: [-Math.PI / 2, 0, Math.PI],
+  position: [0, 0, 0],
+  scale: 1,
 };
 
 const TDModelSlice = createSlice({
@@ -18,8 +22,16 @@ const TDModelSlice = createSlice({
       state.rotation[1] = action.payload[1];
       state.rotation[2] = action.payload[2];
     },
+    transform: (state, action: PayloadAction<[number, number, number]>) => {
+      state.position[0] = action.payload[0];
+      state.position[1] = action.payload[1];
+      state.position[2] = action.payload[2];
+    },
+    reScale: (state, action: PayloadAction<number>) => {
+      state.scale = action.payload;
+    },
   },
 });
 
-export const { rotate } = TDModelSlice.actions;
+export const { rotate, transform, reScale } = TDModelSlice.actions;
 export default TDModelSlice.reducer;

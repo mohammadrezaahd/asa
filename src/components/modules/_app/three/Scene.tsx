@@ -13,6 +13,7 @@ interface ISceneProps {
 }
 
 const Scene: FC<ISceneProps> = ({ fileUrl }) => {
+  
   const [orbitControls, setOrbitControls] = useState<IOrbits>({
     rotation: [-Math.PI / 2, 0, Math.PI],
     position: [0, 0, 0],
