@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import { Input, IconButton, Typography } from "@material-tailwind/react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 
@@ -6,15 +6,17 @@ interface ILabeledNumberAmountButtonsProps {
   labelIcon: ReactNode;
   labelText?: string;
   description?: string;
+  value: number;
+  setValue: (value: number) => void;
 }
 
 const LabeledNumberAmountButtons: FC<ILabeledNumberAmountButtonsProps> = ({
   labelIcon,
   labelText,
   description,
+  value = 0,
+  setValue,
 }) => {
-  const [value, setValue] = React.useState(0);
-
   return (
     <div className="w-80">
       {labelText && (
@@ -47,14 +49,14 @@ const LabeledNumberAmountButtons: FC<ILabeledNumberAmountButtonsProps> = ({
           <IconButton
             size="sm"
             className="rounded"
-            onClick={() => setValue((cur) => (cur === 0 ? 0 : cur - 1))}
+            onClick={() => setValue(value === 0 ? 0 : value - 1)}
           >
             <FaMinus />
           </IconButton>
           <IconButton
             size="sm"
             className="rounded"
-            onClick={() => setValue((cur) => cur + 1)}
+            onClick={() => setValue(value + 1)}
           >
             <FaPlus />
           </IconButton>

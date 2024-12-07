@@ -8,9 +8,10 @@ import { Accordions } from "@/components/modules/partials/accordions";
 
 interface IModelToolbarProps {
   setVal: (x: number, y: number, z: number) => void;
+  rotation: [number, number, number];
 }
 
-const ModelToolbar: FC<IModelToolbarProps> = ({ setVal }) => {
+const ModelToolbar: FC<IModelToolbarProps> = ({ setVal, rotation }) => {
   const dragRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -33,7 +34,7 @@ const ModelToolbar: FC<IModelToolbarProps> = ({ setVal }) => {
             <IoIosSearch />
           </div>
         </div>
-        <ModelToolbarBody setVal={setVal} />
+        <ModelToolbarBody setVal={setVal} rotation={rotation} />
       </Accordions.SingleAccordion>
     </DragComponents>
   );

@@ -21,6 +21,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
   const [rotationOnly, setRotationOnly] = useState<[number, number, number]>([
     0, 0, 0,
   ]);
+
   const controlChangeHandler = (
     newRotation: Euler,
     newPosition: Vector3,
@@ -31,10 +32,15 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
       rotation: [newRotation.x, newRotation.y, newRotation.z],
       scale: newScale,
     });
+    setRotationOnly([newRotation.x, newRotation.y, newRotation.z]);
   };
 
   const changeRotationOnly = (x: number, y: number, z: number) => {
     setRotationOnly([x, y, z]);
+    setOrbitControls((prev) => ({
+      ...prev,
+      rotation: [x, y, z],
+    }));
   };
 
   useEffect(() => {
@@ -43,7 +49,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
 
   return (
     <>
-      <ModelToolbar setVal={changeRotationOnly} />
+      <ModelToolbar setVal={changeRotationOnly} rotation={rotationOnly} />
 
       <Canvas style={{ height: "100vh" }} shadows>
         {/* <Lights /> */}
