@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Model from "./Model";
@@ -13,13 +13,14 @@ interface ISceneProps {
 }
 
 const Scene: FC<ISceneProps> = ({ fileUrl }) => {
-  
   const [orbitControls, setOrbitControls] = useState<IOrbits>({
     rotation: [-Math.PI / 2, 0, Math.PI],
     position: [0, 0, 0],
     scale: 1,
   });
-
+  const [rotationOnly, setRotationOnly] = useState<[number, number, number]>([
+    0, 0, 0,
+  ]);
   const controlChangeHandler = (
     newRotation: Euler,
     newPosition: Vector3,
@@ -32,9 +33,17 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
     });
   };
 
+  const changeRotationOnly = (x: number, y: number, z: number) => {
+    setRotationOnly([x, y, z]);
+  };
+
+  useEffect(() => {
+    console.log(rotationOnly);
+  }, [rotationOnly]);
+
   return (
     <>
-      <ModelToolbar />
+      <ModelToolbar setVal={changeRotationOnly} />
 
       <Canvas style={{ height: "100vh" }} shadows>
         {/* <Lights /> */}

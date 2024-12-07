@@ -1,12 +1,16 @@
 "use client";
 import DragComponents from "@/components/modules/partials/draggable";
-import { useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import { PiDotsSixBold } from "react-icons/pi";
 import ModelToolbarBody from "./toolbarBody";
 import { Accordions } from "@/components/modules/partials/accordions";
 
-const ModelToolbar = () => {
+interface IModelToolbarProps {
+  setVal: (x: number, y: number, z: number) => void;
+}
+
+const ModelToolbar: FC<IModelToolbarProps> = ({ setVal }) => {
   const dragRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -29,7 +33,7 @@ const ModelToolbar = () => {
             <IoIosSearch />
           </div>
         </div>
-        <ModelToolbarBody />
+        <ModelToolbarBody setVal={setVal} />
       </Accordions.SingleAccordion>
     </DragComponents>
   );

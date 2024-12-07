@@ -1,4 +1,4 @@
 import FileDraggable from "./FileDraggable";
-import NumberAmountButtons from "./NumberAmountButtons";
+import LabeledNumberAmountButtons from "./LabeledNumberAmountButtons";
 
-export const Inputs = { NumberAmountButtons, FileDraggable };
+export const Inputs = { LabeledNumberAmountButtons, FileDraggable };
