@@ -7,11 +7,18 @@ import ModelToolbarBody from "./toolbarBody";
 import { Accordions } from "@/components/modules/partials/accordions";
 
 interface IModelToolbarProps {
-  setVal: (x: number, y: number, z: number) => void;
   rotation: [number, number, number];
+  position: [number, number, number];
+  setRotation: (x: number, y: number, z: number) => void;
+  setPosition: (x: number, y: number, z: number) => void;
 }
 
-const ModelToolbar: FC<IModelToolbarProps> = ({ setVal, rotation }) => {
+const ModelToolbar: FC<IModelToolbarProps> = ({
+  rotation,
+  position,
+  setRotation,
+  setPosition,
+}) => {
   const dragRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -34,7 +41,12 @@ const ModelToolbar: FC<IModelToolbarProps> = ({ setVal, rotation }) => {
             <IoIosSearch />
           </div>
         </div>
-        <ModelToolbarBody setVal={setVal} rotation={rotation} />
+        <ModelToolbarBody
+          rotation={rotation}
+          position={position}
+          setRotation={setRotation}
+          setPosition={setPosition}
+        />
       </Accordions.SingleAccordion>
     </DragComponents>
   );

@@ -6,6 +6,8 @@ interface ILabeledNumberAmountButtonsProps {
   labelIcon: ReactNode;
   labelText?: string;
   description?: string;
+  step?: number;
+  negatable?: boolean;
   value: number;
   setValue: (value: number) => void;
 }
@@ -14,6 +16,8 @@ const LabeledNumberAmountButtons: FC<ILabeledNumberAmountButtonsProps> = ({
   labelIcon,
   labelText,
   description,
+  negatable = false,
+  step = 1,
   value = 0,
   setValue,
 }) => {
@@ -49,14 +53,18 @@ const LabeledNumberAmountButtons: FC<ILabeledNumberAmountButtonsProps> = ({
           <IconButton
             size="sm"
             className="rounded"
-            onClick={() => setValue(value === 0 ? 0 : value - 1)}
+            onClick={() => {
+              negatable
+                ? setValue(value - step)
+                : setValue(value === 0 ? 0 : value - step);
+            }}
           >
             <FaMinus />
           </IconButton>
           <IconButton
             size="sm"
             className="rounded"
-            onClick={() => setValue(value + 1)}
+            onClick={() => setValue(value + step)}
           >
             <FaPlus />
           </IconButton>
@@ -64,7 +72,7 @@ const LabeledNumberAmountButtons: FC<ILabeledNumberAmountButtonsProps> = ({
       </div>
       {description && (
         <Typography variant="small" color="gray" className="mt-2 font-normal">
-          Adjust the number using the + and - controls.
+          {description}
         </Typography>
       )}
     </div>

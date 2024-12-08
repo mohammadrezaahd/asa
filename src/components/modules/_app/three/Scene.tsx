@@ -1,11 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Model from "./Model";
-// import Lights from "./Lights";
 import { Euler, Vector3 } from "three";
 import CustomControls from "./CustomControls";
-import { IOrbits } from "@/types/components/global/controls";
 import ModelToolbar from "@/components/templates/admin/modelViewer/toolbar";
 
 interface ISceneProps {
@@ -13,58 +11,67 @@ interface ISceneProps {
 }
 
 const Scene: FC<ISceneProps> = ({ fileUrl }) => {
-  const [orbitControls, setOrbitControls] = useState<IOrbits>({
-    rotation: [-Math.PI / 2, 0, Math.PI],
-    position: [0, 0, 0],
+  const [controls, setControls] = useState({
+    rotation: [-Math.PI / 2, 0, Math.PI] as [number, number, number],
+    position: [0, 0, 0] as [number, number, number],
     scale: 1,
   });
-  const [rotationOnly, setRotationOnly] = useState<[number, number, number]>([
-    0, 0, 0,
-  ]);
 
   const controlChangeHandler = (
     newRotation: Euler,
     newPosition: Vector3,
     newScale: number
   ) => {
-    setOrbitControls({
-      position: [newPosition.x, newPosition.y, newPosition.z],
-      rotation: [newRotation.x, newRotation.y, newRotation.z],
+    setControls({
+      position: [
+        Number(newPosition.x.toFixed(2)),
+        Number(newPosition.y.toFixed(2)),
+        Number(newPosition.z.toFixed(2)),
+      ],
+      rotation: [
+        Number(newRotation.x.toFixed(2)),
+        Number(newRotation.y.toFixed(2)),
+        Number(newRotation.z.toFixed(2)),
+      ],
       scale: newScale,
     });
-    setRotationOnly([newRotation.x, newRotation.y, newRotation.z]);
   };
 
-  const changeRotationOnly = (x: number, y: number, z: number) => {
-    setRotationOnly([x, y, z]);
-    setOrbitControls((prev) => ({
+  const changeRotation = (x: number, y: number, z: number) => {
+    setControls((prev) => ({
       ...prev,
       rotation: [x, y, z],
     }));
   };
 
-  useEffect(() => {
-    console.log(rotationOnly);
-  }, [rotationOnly]);
+  const changePosition = (x: number, y: number, z: number) => {
+    setControls((prev) => ({
+      ...prev,
+      position: [x, y, z],
+    }));
+  };
 
   return (
     <>
-      <ModelToolbar setVal={changeRotationOnly} rotation={rotationOnly} />
-
+      <ModelToolbar
+        rotation={controls.rotation}
+        position={controls.position}
+        setRotation={changeRotation}
+        setPosition={changePosition}
+      />
       <Canvas style={{ height: "100vh" }} shadows>
-        {/* <Lights /> */}
         <group
-          position={orbitControls.position}
-          rotation={orbitControls.rotation}
-          scale={orbitControls.scale}
+          position={controls.position}
+          rotation={controls.rotation}
+          scale={controls.scale}
         >
           <Model fileUrl={fileUrl} />
         </group>
         <CustomControls
           onChange={controlChangeHandler}
-          initialRotation={orbitControls.rotation}
-          initialPosition={orbitControls.position}
-          initialScale={orbitControls.scale}
+          rotation={controls.rotation}
+          position={controls.position}
+          scale={controls.scale}
         />
         <PerspectiveCamera makeDefault position={[0, 0, 20]} />
       </Canvas>

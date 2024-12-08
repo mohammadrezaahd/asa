@@ -1,11 +1,7 @@
-import ModelToolbar from "../admin/modelViewer/toolbar";
-
 const Test = () => {
   return (
     <>
-      <div className="bg-blue-gray-900">
-        <ModelToolbar />
-      </div>
+      <div className="bg-blue-gray-900"></div>
     </>
   );
 };
