@@ -3,7 +3,7 @@ import { Input, IconButton, Typography } from "@material-tailwind/react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 
 interface ILabeledNumberAmountButtonsProps {
-  labelIcon: ReactNode;
+  labelIcon?: ReactNode;
   labelText?: string;
   description?: string;
   step?: number;

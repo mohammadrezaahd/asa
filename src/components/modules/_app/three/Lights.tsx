@@ -1,11 +1,20 @@
-import React from "react";
+import { ILights } from "@/types/components/global/controls";
+import { FC } from "react";
 
-const Lights: React.FC = () => {
+interface ILightsProps {
+  ambient: ILights;
+  // directional: ILights;
+  // spot: ILights;
+  // point: ILights;
+}
+
+const Lights: FC<ILightsProps> = ({ ambient }) => {
   return (
     <>
-      {/* <ambientLight ref={ambientLightRef} />
-      <directionalLight ref={directionalLightRef} />
-      <pointLight ref={pointLightRef} /> */}
+      <ambientLight />
+      {/* <directionalLight />
+      <spotLight />
+      <pointLight /> */}
     </>
   );
 };

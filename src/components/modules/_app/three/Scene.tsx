@@ -5,12 +5,16 @@ import Model from "./Model";
 import { Euler, Vector3 } from "three";
 import CustomControls from "./CustomControls";
 import ModelToolbar from "@/components/templates/admin/modelViewer/toolbar";
+import Lights from "./Lights";
 
 interface ISceneProps {
   fileUrl: string;
 }
 
 const Scene: FC<ISceneProps> = ({ fileUrl }) => {
+  //Lights
+
+  //Orbit controls
   const [controls, setControls] = useState({
     rotation: [-Math.PI / 2, 0, Math.PI] as [number, number, number],
     position: [0, 0, 0] as [number, number, number],
@@ -36,14 +40,12 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
       scale: newScale,
     });
   };
-
   const changeRotation = (x: number, y: number, z: number) => {
     setControls((prev) => ({
       ...prev,
       rotation: [x, y, z],
     }));
   };
-
   const changePosition = (x: number, y: number, z: number) => {
     setControls((prev) => ({
       ...prev,
@@ -67,6 +69,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
         >
           <Model fileUrl={fileUrl} />
         </group>
+        {/* <Lights /> */}
         <CustomControls
           onChange={controlChangeHandler}
           rotation={controls.rotation}

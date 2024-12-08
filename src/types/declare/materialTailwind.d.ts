@@ -34,6 +34,7 @@ import type {
   TabsProps as OriginalTabsProps,
   TextareaProps as OriginalTextareaProps,
   TooltipProps as OriginalTooltipProps,
+  SwitchProps as OriginalSwitchProps,
 } from "@material-tailwind/react";
 
 declare module "@material-tailwind/react" {
@@ -386,5 +387,15 @@ declare module "@material-tailwind/react" {
     onPointerEnterCapture?: OriginalTooltipProps["onPointerEnterCapture"];
     onPointerLeaveCapture?: OriginalTooltipProps["onPointerLeaveCapture"];
     placeholder?: OriginalTooltipProps["placeholder"];
+  }
+  export interface SwitchProps
+    extends Omit<
+      OriginalSwitchProps,
+      "onPointerEnterCapture" | "onPointerLeaveCapture" | "placeholder"
+    > {
+    onPointerEnterCapture?: OriginalSwitchProps["onPointerEnterCapture"];
+    onPointerLeaveCapture?: OriginalSwitchProps["onPointerLeaveCapture"];
+    placeholder?: OriginalSwitchProps["placeholder"];
+    crossOrigin?: OriginalSwitchProps["crossOrigin"];
   }
 }
