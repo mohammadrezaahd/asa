@@ -5,7 +5,7 @@ import Model from "./Model";
 import { Euler, Vector3 } from "three";
 import CustomControls from "./CustomControls";
 import ModelToolbar from "@/components/templates/admin/modelViewer/toolbar";
-import Lights from "./Lights";
+// import Lights from "./Lights";
 
 interface ISceneProps {
   fileUrl: string;
@@ -40,12 +40,14 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
       scale: newScale,
     });
   };
+
   const changeRotation = (x: number, y: number, z: number) => {
     setControls((prev) => ({
       ...prev,
       rotation: [x, y, z],
     }));
   };
+
   const changePosition = (x: number, y: number, z: number) => {
     setControls((prev) => ({
       ...prev,
