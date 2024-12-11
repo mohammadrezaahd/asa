@@ -5,14 +5,44 @@ import Model from "./Model";
 import { Euler, Vector3 } from "three";
 import CustomControls from "./CustomControls";
 import ModelToolbar from "@/components/templates/admin/modelViewer/toolbar";
-// import Lights from "./Lights";
+import Lights from "./Lights";
+import { ILight } from "@/types/components/global/controls";
+import { constants } from "../../../../constants";
 
 interface ISceneProps {
   fileUrl: string;
 }
-
 const Scene: FC<ISceneProps> = ({ fileUrl }) => {
   //Lights
+  const [lights, setLights] = useState<ILight[]>(
+    constants.lightTypes.map((type, index) => ({
+      type,
+      color: "#ffffff",
+      isVisible: true,
+      position: [0, 0, 0],
+      setColor: (color: string) => {
+        setLights((prev) => {
+          const newLights = [...prev];
+          newLights[index].color = color;
+          return newLights;
+        });
+      },
+      setIsVisible: (isVisible: boolean) => {
+        setLights((prev) => {
+          const newLights = [...prev];
+          newLights[index].isVisible = isVisible;
+          return newLights;
+        });
+      },
+      setPosition: (x: number, y: number, z: number) => {
+        setLights((prev) => {
+          const newLights = [...prev];
+          newLights[index].position = [x, y, z];
+          return newLights;
+        });
+      },
+    }))
+  );
 
   //Orbit controls
   const [controls, setControls] = useState({
@@ -62,6 +92,8 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
         position={controls.position}
         setRotation={changeRotation}
         setPosition={changePosition}
+        lights={lights}
+        setLights={setLights}
       />
       <Canvas style={{ height: "100vh" }} shadows>
         <group
@@ -71,7 +103,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
         >
           <Model fileUrl={fileUrl} />
         </group>
-        {/* <Lights /> */}
+        <Lights lights={lights} />
         <CustomControls
           onChange={controlChangeHandler}
           rotation={controls.rotation}

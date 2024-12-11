@@ -5,12 +5,15 @@ import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import { PiDotsSixBold } from "react-icons/pi";
 import ModelToolbarBody from "./toolbarBody";
 import { Accordions } from "@/components/modules/partials/accordions";
+import { ILight } from "@/types/components/global/controls";
 
 interface IModelToolbarProps {
   rotation: [number, number, number];
   position: [number, number, number];
   setRotation: (x: number, y: number, z: number) => void;
   setPosition: (x: number, y: number, z: number) => void;
+  lights: ILight[];
+  setLights: (lights: ILight[]) => void;
 }
 
 const ModelToolbar: FC<IModelToolbarProps> = ({
@@ -18,6 +21,8 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
   position,
   setRotation,
   setPosition,
+  lights,
+  setLights,
 }) => {
   const dragRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLDivElement>(null);
@@ -46,6 +51,8 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
           position={position}
           setRotation={setRotation}
           setPosition={setPosition}
+          lights={lights}
+          setLights={setLights}
         />
       </Accordions.SingleAccordion>
     </DragComponents>

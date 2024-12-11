@@ -1,20 +1,25 @@
-import { ILights } from "@/types/components/global/controls";
-import { FC } from "react";
+import { ILight } from "@/types/components/global/controls";
+import { FC, Fragment } from "react";
 
 interface ILightsProps {
-  ambient: ILights;
-  // directional: ILights;
-  // spot: ILights;
-  // point: ILights;
+  lights: ILight[];
 }
 
-const Lights: FC<ILightsProps> = ({ ambient }) => {
+const Lights: FC<ILightsProps> = ({ lights }) => {
   return (
     <>
-      <ambientLight />
-      {/* <directionalLight />
-      <spotLight />
-      <pointLight /> */}
+      {lights.map((light, index) =>
+        light.isVisible ? (
+          <Fragment key={index}>
+            {light.type === "Ambient" && (
+              <ambientLight color={light.color} position={light.position} />
+            )}
+            {light.type === "Directional" && (
+              <directionalLight color={light.color} position={light.position} />
+            )}
+          </Fragment>
+        ) : null
+      )}
     </>
   );
 };

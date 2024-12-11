@@ -1,8 +1,11 @@
-export interface ILights {
+export interface ILight {
+  type: string;
   color: string;
-  position: [0, 0, 0];
-  intensity: number;
-  visible: boolean;
+  isVisible: boolean;
+  position: [number, number, number];
+  setColor: (color: string) => void;
+  setIsVisible: (isVisible: boolean) => void;
+  setPosition: (x: number, y: number, z: number) => void;
 }
 
 export interface IOrbits {
