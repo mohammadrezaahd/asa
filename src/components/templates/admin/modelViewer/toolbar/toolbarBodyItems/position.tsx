@@ -1,6 +1,6 @@
 import { Accordions } from "@/components/modules/partials/accordions";
 import { Inputs } from "@/components/modules/partials/inputs";
-import { FC, useCallback, useRef, useState } from "react";
+import { FC, useCallback, useRef } from "react";
 import { FaX, FaY, FaZ } from "react-icons/fa6";
 
 interface IPositionProps {
@@ -10,20 +10,17 @@ interface IPositionProps {
 
 const Position: FC<IPositionProps> = ({ position, setPosition }) => {
   const positionAccordionToggleRef = useRef(null);
-  const [positionValues, setPositionValues] = useState({
-    x: position[0],
-    y: position[1],
-    z: position[2],
-  });
 
   // Handle position changes
   const positionChangeHandler = useCallback(
     (axis: "x" | "y" | "z", value: number) => {
-      const newValues = { ...positionValues, [axis]: value };
-      setPositionValues(newValues);
-      setPosition(newValues.x, newValues.y, newValues.z);
+      const newValues = [...position];
+      if (axis === "x") newValues[0] = value;
+      if (axis === "y") newValues[1] = value;
+      if (axis === "z") newValues[2] = value;
+      setPosition(newValues[0], newValues[1], newValues[2]);
     },
-    [positionValues, setPosition]
+    [position, setPosition]
   );
 
   return (
@@ -34,21 +31,21 @@ const Position: FC<IPositionProps> = ({ position, setPosition }) => {
       <div>
         <Inputs.LabeledNumberAmountButtons
           labelIcon={<FaX />}
-          value={positionValues.x}
+          value={position[0]}
           setValue={(value) => positionChangeHandler("x", value)}
           step={0.01}
           negatable={true}
         />
         <Inputs.LabeledNumberAmountButtons
           labelIcon={<FaY />}
-          value={positionValues.y}
+          value={position[1]}
           setValue={(value) => positionChangeHandler("y", value)}
           step={0.01}
           negatable={true}
         />
         <Inputs.LabeledNumberAmountButtons
           labelIcon={<FaZ />}
-          value={positionValues.z}
+          value={position[2]}
           setValue={(value) => positionChangeHandler("z", value)}
           step={0.01}
           negatable={true}
