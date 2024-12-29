@@ -1,6 +1,6 @@
 import { Accordions } from "@/components/modules/partials/accordions";
 import { Inputs } from "@/components/modules/partials/inputs";
-import { FC, useCallback, useRef, useState } from "react";
+import { FC, useCallback, useRef, useState, useEffect } from "react";
 import { FaX, FaY, FaZ } from "react-icons/fa6";
 
 interface IRotationProps {
@@ -15,6 +15,14 @@ const Rotation: FC<IRotationProps> = ({ rotation, setRotation }) => {
     y: rotation[1],
     z: rotation[2],
   });
+
+  useEffect(() => {
+    setRotationValues({
+      x: rotation[0],
+      y: rotation[1],
+      z: rotation[2],
+    });
+  }, [rotation]);
 
   // Handle rotation changes
   const rotationChangeHandler = useCallback(

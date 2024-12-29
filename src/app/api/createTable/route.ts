@@ -5,7 +5,6 @@ import environments from "@/helpers/configurations";
 import filePathGenerator from "@/utils/filePathGenerator";
 
 const STORAGE_FOLDER = environments.storage.storage_folder;
-const BASE_URL = environments.uri.base_url;
 
 export async function POST(req: NextRequest) {
   try {

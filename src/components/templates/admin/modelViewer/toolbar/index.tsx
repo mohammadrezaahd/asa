@@ -10,18 +10,22 @@ import { ILight } from "@/types/components/global/controls";
 interface IModelToolbarProps {
   rotation: [number, number, number];
   position: [number, number, number];
+  scale: number;
+  lights: ILight[];
   setRotation: (x: number, y: number, z: number) => void;
   setPosition: (x: number, y: number, z: number) => void;
-  lights: ILight[];
+  setScale: (value: number) => void;
   setLights: (lights: ILight[]) => void;
 }
 
 const ModelToolbar: FC<IModelToolbarProps> = ({
   rotation,
   position,
+  scale,
+  lights,
   setRotation,
   setPosition,
-  lights,
+  setScale,
   setLights,
 }) => {
   const dragRef = useRef<HTMLDivElement>(null);
@@ -49,9 +53,11 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
         <ModelToolbarBody
           rotation={rotation}
           position={position}
+          scale={scale}
+          lights={lights}
           setRotation={setRotation}
           setPosition={setPosition}
-          lights={lights}
+          setScale={setScale}
           setLights={setLights}
         />
       </Accordions.SingleAccordion>

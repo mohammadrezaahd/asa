@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TDModelsApi } from "@/api/TDModels";
+import { TDModelsApi } from "@/components/api/TDModels";
 import { Inputs } from "@/components/modules/partials/inputs";
 import ModelViewer from "@/components/modules/_app/three";
 

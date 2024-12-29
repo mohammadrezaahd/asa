@@ -22,6 +22,8 @@ const CustomControls: React.FC<CustomControlsProps> = ({
     x: number;
     y: number;
   } | null>(null);
+  const [isRightClick, setIsRightClick] = useState(false);
+  const [isModelToolbarDragging, setIsModelToolbarDragging] = useState(false);
 
   const updateRotation = useCallback(
     (deltaX: number, deltaY: number, shiftKey: boolean) => {
@@ -53,32 +55,44 @@ const CustomControls: React.FC<CustomControlsProps> = ({
 
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
-      if (!isDragging || !lastMousePosition) return;
+      if (!isDragging || !lastMousePosition || isModelToolbarDragging) return;
       const deltaX = event.clientX - lastMousePosition.x;
       const deltaY = event.clientY - lastMousePosition.y;
-      if (event.buttons === 2) {
-        // Right mouse button
+      if (isRightClick) {
         updatePosition(deltaX, deltaY);
       } else {
         updateRotation(deltaX, deltaY, event.shiftKey);
       }
       setLastMousePosition({ x: event.clientX, y: event.clientY });
     },
-    [isDragging, lastMousePosition, updatePosition, updateRotation]
+    [
+      isDragging,
+      lastMousePosition,
+      updatePosition,
+      updateRotation,
+      isRightClick,
+      isModelToolbarDragging,
+    ]
   );
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
+    setIsRightClick(false);
     setLastMousePosition(null);
   }, []);
 
   const handleMouseDown = useCallback((event: MouseEvent) => {
+    if (event.target !== event.currentTarget) return; // Only proceed if clicking on the scene
+    if (event.button === 2) {
+      setIsRightClick(true);
+    }
     setIsDragging(true);
     setLastMousePosition({ x: event.clientX, y: event.clientY });
   }, []);
 
   const handleWheel = useCallback(
     (event: WheelEvent) => {
+      event.preventDefault();
       updateScale(event.deltaY);
     },
     [updateScale]
@@ -116,26 +130,37 @@ const CustomControls: React.FC<CustomControlsProps> = ({
   }, []);
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("wheel", handleWheel);
-    window.addEventListener("touchmove", handleTouchMove);
-    window.addEventListener("touchend", handleTouchEnd);
-    window.addEventListener("touchstart", handleTouchStart);
-    window.addEventListener("contextmenu", handleContextMenu);
-    window.addEventListener("selectstart", handleSelectStart);
+    const canvasElement = document.querySelector("canvas"); // Assuming the canvas element is the target
+    if (!canvasElement) return;
+
+    canvasElement.addEventListener("mousemove", handleMouseMove);
+    canvasElement.addEventListener("mousedown", handleMouseDown);
+    canvasElement.addEventListener("mouseup", handleMouseUp);
+    canvasElement.addEventListener("wheel", handleWheel, { passive: false });
+    canvasElement.addEventListener("touchmove", handleTouchMove);
+    canvasElement.addEventListener("touchend", handleTouchEnd);
+    canvasElement.addEventListener("touchstart", handleTouchStart);
+    canvasElement.addEventListener("contextmenu", handleContextMenu);
+    canvasElement.addEventListener("selectstart", handleSelectStart);
+
+    const handleModelToolbarDragStart = () => setIsModelToolbarDragging(true);
+    const handleModelToolbarDragEnd = () => setIsModelToolbarDragging(false);
+
+    window.addEventListener("modelToolbarDragStart", handleModelToolbarDragStart);
+    window.addEventListener("modelToolbarDragEnd", handleModelToolbarDragEnd);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("contextmenu", handleContextMenu);
-      window.removeEventListener("selectstart", handleSelectStart);
+      canvasElement.removeEventListener("mousemove", handleMouseMove);
+      canvasElement.removeEventListener("mousedown", handleMouseDown);
+      canvasElement.removeEventListener("mouseup", handleMouseUp);
+      canvasElement.removeEventListener("wheel", handleWheel);
+      canvasElement.removeEventListener("touchmove", handleTouchMove);
+      canvasElement.removeEventListener("touchend", handleTouchEnd);
+      canvasElement.removeEventListener("touchstart", handleTouchStart);
+      canvasElement.removeEventListener("contextmenu", handleContextMenu);
+      canvasElement.removeEventListener("selectstart", handleSelectStart);
+      window.removeEventListener("modelToolbarDragStart", handleModelToolbarDragStart);
+      window.removeEventListener("modelToolbarDragEnd", handleModelToolbarDragEnd);
     };
   }, [
     handleMouseMove,

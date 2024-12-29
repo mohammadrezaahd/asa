@@ -85,14 +85,22 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
     }));
   };
 
+  const changeScale = (value: number) => {
+    setControls((prev) => ({
+      ...prev,
+      scale: value,
+    }));
+  };
   return (
     <>
       <ModelToolbar
         rotation={controls.rotation}
         position={controls.position}
+        scale={controls.scale}
+        lights={lights}
         setRotation={changeRotation}
         setPosition={changePosition}
-        lights={lights}
+        setScale={changeScale}
         setLights={setLights}
       />
       <Canvas style={{ height: "100vh" }} shadows>
