@@ -46,8 +46,8 @@ const CustomControls: React.FC<CustomControlsProps> = ({
   );
 
   const updateScale = useCallback(
-    (deltaY: number) => {
-      scaleRef.current += deltaY * -0.001;
+    (scaleFactor: number) => {
+      scaleRef.current *= scaleFactor;
       scaleRef.current = Math.max(0.1, Math.min(20, scaleRef.current));
       onChange(rotationRef.current, positionRef.current, scaleRef.current);
     },
@@ -118,8 +118,8 @@ const CustomControls: React.FC<CustomControlsProps> = ({
           touch2.clientY - touch1.clientY
         );
         if (initialDistance !== null) {
-          const distanceDelta = currentDistance - initialDistance;
-          updateScale(distanceDelta);
+          const scaleFactor = currentDistance / initialDistance;
+          updateScale(scaleFactor);
         }
         setInitialDistance(currentDistance);
       } else {
