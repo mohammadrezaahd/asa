@@ -24,6 +24,7 @@ const CustomControls: React.FC<CustomControlsProps> = ({
   } | null>(null);
   const [isRightClick, setIsRightClick] = useState(false);
   const [isModelToolbarDragging, setIsModelToolbarDragging] = useState(false);
+  const [initialDistance, setInitialDistance] = useState<number | null>(null);
 
   const updateRotation = useCallback(
     (deltaX: number, deltaY: number, shiftKey: boolean) => {
@@ -105,24 +106,47 @@ const CustomControls: React.FC<CustomControlsProps> = ({
   const handleTouchMove = useCallback(
     (event: TouchEvent) => {
       if (!isDragging || !lastMousePosition) return;
-      const touch = event.touches[0];
-      const deltaX = touch.clientX - lastMousePosition.x;
-      const deltaY = touch.clientY - lastMousePosition.y;
-      updateRotation(deltaX, deltaY, event.shiftKey);
-      setLastMousePosition({ x: touch.clientX, y: touch.clientY });
+      if (event.touches.length === 1) {
+        const touch = event.touches[0];
+        const deltaX = touch.clientX - lastMousePosition.x;
+        const deltaY = touch.clientY - lastMousePosition.y;
+        updateRotation(deltaX, deltaY, event.shiftKey);
+        setLastMousePosition({ x: touch.clientX, y: touch.clientY });
+      } else if (event.touches.length === 2 && initialDistance !== null) {
+        const touch1 = event.touches[0];
+        const touch2 = event.touches[1];
+        const currentDistance = Math.sqrt(
+          Math.pow(touch2.clientX - touch1.clientX, 2) +
+          Math.pow(touch2.clientY - touch1.clientY, 2)
+        );
+        const deltaDistance = currentDistance - initialDistance;
+        updateScale(deltaDistance);
+        setInitialDistance(currentDistance);
+      }
     },
-    [isDragging, lastMousePosition, updateRotation]
+    [isDragging, lastMousePosition, updateRotation, updateScale, initialDistance]
   );
 
   const handleTouchEnd = useCallback(() => {
     setIsDragging(false);
     setLastMousePosition(null);
+    setInitialDistance(null);
   }, []);
 
   const handleTouchStart = useCallback((event: TouchEvent) => {
-    const touch = event.touches[0];
-    setIsDragging(true);
-    setLastMousePosition({ x: touch.clientX, y: touch.clientY });
+    if (event.touches.length === 1) {
+      const touch = event.touches[0];
+      setIsDragging(true);
+      setLastMousePosition({ x: touch.clientX, y: touch.clientY });
+    } else if (event.touches.length === 2) {
+      const touch1 = event.touches[0];
+      const touch2 = event.touches[1];
+      const distance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) +
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      setInitialDistance(distance);
+    }
   }, []);
 
   const handleContextMenu = useCallback((event: MouseEvent) => {
