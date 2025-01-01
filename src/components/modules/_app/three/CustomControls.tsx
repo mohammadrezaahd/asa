@@ -30,11 +30,7 @@ const CustomControls: React.FC<CustomControlsProps> = ({
     (deltaX: number, deltaY: number, shiftKey: boolean) => {
       const factor = shiftKey ? 0.01 : 0.005;
       rotationRef.current.x += deltaY * factor;
-      if (shiftKey) {
-        rotationRef.current.y += deltaX * factor; // Rotate around y-axis when shift key is pressed
-      } else {
-        rotationRef.current.z += deltaX * factor; // Reverse left and right rotation
-      }
+      rotationRef.current.z -= deltaX * factor; // Swap x and z
       onChange(rotationRef.current, positionRef.current, scaleRef.current);
     },
     [onChange]
@@ -106,25 +102,35 @@ const CustomControls: React.FC<CustomControlsProps> = ({
   const handleTouchMove = useCallback(
     (event: TouchEvent) => {
       if (!isDragging || !lastMousePosition) return;
-      if (event.touches.length === 1) {
+      if (event.touches.length === 2) {
+        const touch1 = event.touches[0];
+        const touch2 = event.touches[1];
+        const deltaX = (touch1.clientX + touch2.clientX) / 2 - lastMousePosition.x;
+        const deltaY = (touch1.clientY + touch2.clientY) / 2 - lastMousePosition.y;
+        updatePosition(deltaX, deltaY);
+        setLastMousePosition({
+          x: (touch1.clientX + touch2.clientX) / 2,
+          y: (touch1.clientY + touch2.clientY) / 2,
+        });
+
+        const currentDistance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        );
+        if (initialDistance !== null) {
+          const distanceDelta = currentDistance - initialDistance;
+          updateScale(distanceDelta);
+        }
+        setInitialDistance(currentDistance);
+      } else {
         const touch = event.touches[0];
         const deltaX = touch.clientX - lastMousePosition.x;
         const deltaY = touch.clientY - lastMousePosition.y;
         updateRotation(deltaX, deltaY, event.shiftKey);
         setLastMousePosition({ x: touch.clientX, y: touch.clientY });
-      } else if (event.touches.length === 2 && initialDistance !== null) {
-        const touch1 = event.touches[0];
-        const touch2 = event.touches[1];
-        const currentDistance = Math.sqrt(
-          Math.pow(touch2.clientX - touch1.clientX, 2) +
-          Math.pow(touch2.clientY - touch1.clientY, 2)
-        );
-        const deltaDistance = currentDistance - initialDistance;
-        updateScale(deltaDistance);
-        setInitialDistance(currentDistance);
       }
     },
-    [isDragging, lastMousePosition, updateRotation, updateScale, initialDistance]
+    [isDragging, lastMousePosition, updatePosition, updateRotation, updateScale, initialDistance]
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -134,19 +140,9 @@ const CustomControls: React.FC<CustomControlsProps> = ({
   }, []);
 
   const handleTouchStart = useCallback((event: TouchEvent) => {
-    if (event.touches.length === 1) {
-      const touch = event.touches[0];
-      setIsDragging(true);
-      setLastMousePosition({ x: touch.clientX, y: touch.clientY });
-    } else if (event.touches.length === 2) {
-      const touch1 = event.touches[0];
-      const touch2 = event.touches[1];
-      const distance = Math.sqrt(
-        Math.pow(touch2.clientX - touch1.clientX, 2) +
-        Math.pow(touch2.clientY - touch1.clientY, 2)
-      );
-      setInitialDistance(distance);
-    }
+    const touch = event.touches[0];
+    setIsDragging(true);
+    setLastMousePosition({ x: touch.clientX, y: touch.clientY });
   }, []);
 
   const handleContextMenu = useCallback((event: MouseEvent) => {
