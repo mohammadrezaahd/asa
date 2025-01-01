@@ -30,7 +30,7 @@ const CustomControls: React.FC<CustomControlsProps> = ({
     (deltaX: number, deltaY: number, shiftKey: boolean) => {
       const factor = shiftKey ? 0.01 : 0.005;
       rotationRef.current.x += deltaY * factor;
-      rotationRef.current.z -= deltaX * factor; // Swap x and z
+      rotationRef.current.z += deltaX * factor; // Reverse left-right rotation
       onChange(rotationRef.current, positionRef.current, scaleRef.current);
     },
     [onChange]
@@ -56,6 +56,7 @@ const CustomControls: React.FC<CustomControlsProps> = ({
 
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
+      event.preventDefault();
       if (!isDragging || !lastMousePosition || isModelToolbarDragging) return;
       const deltaX = event.clientX - lastMousePosition.x;
       const deltaY = event.clientY - lastMousePosition.y;
@@ -94,13 +95,15 @@ const CustomControls: React.FC<CustomControlsProps> = ({
   const handleWheel = useCallback(
     (event: WheelEvent) => {
       event.preventDefault();
-      updateScale(event.deltaY);
+      const scaleFactor = event.deltaY > 0 ? 1.1 : 0.9;
+      updateScale(scaleFactor);
     },
     [updateScale]
   );
 
   const handleTouchMove = useCallback(
     (event: TouchEvent) => {
+      event.preventDefault();
       if (!isDragging || !lastMousePosition) return;
       if (event.touches.length === 2) {
         const touch1 = event.touches[0];
