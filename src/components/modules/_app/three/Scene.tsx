@@ -111,7 +111,8 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
         >
           <Model fileUrl={fileUrl} />
         </group>
-        <Lights lights={lights} />
+        <Lights lights={lights} key={JSON.stringify(lights)} />
+
         <CustomControls
           onChange={controlChangeHandler}
           rotation={controls.rotation}

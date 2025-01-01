@@ -53,7 +53,7 @@ const LightsManager: FC<ILightsManagerProps> = ({ lights, onLightsChange }) => {
             <div>
               <Inputs.LabeledNumberAmountButtons
                 labelIcon={<FaX />}
-                labelText={`${light.type} Light X Position`}
+                labelText={`${light.type} Light`}
                 value={light.position[0]}
                 setValue={(value) => positionChangeHandler(index, "x", value)}
                 step={0.1}
@@ -61,7 +61,7 @@ const LightsManager: FC<ILightsManagerProps> = ({ lights, onLightsChange }) => {
               />
               <Inputs.LabeledNumberAmountButtons
                 labelIcon={<FaY />}
-                labelText={`${light.type} Light Y Position`}
+                labelText={`${light.type} Light`}
                 value={light.position[1]}
                 setValue={(value) => positionChangeHandler(index, "y", value)}
                 step={0.1}
@@ -69,7 +69,7 @@ const LightsManager: FC<ILightsManagerProps> = ({ lights, onLightsChange }) => {
               />
               <Inputs.LabeledNumberAmountButtons
                 labelIcon={<FaZ />}
-                labelText={`${light.type} Light Z Position`}
+                labelText={`${light.type} Light`}
                 value={light.position[2]}
                 setValue={(value) => positionChangeHandler(index, "z", value)}
                 step={0.1}

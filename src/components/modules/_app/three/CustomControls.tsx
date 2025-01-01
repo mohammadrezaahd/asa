@@ -29,7 +29,11 @@ const CustomControls: React.FC<CustomControlsProps> = ({
     (deltaX: number, deltaY: number, shiftKey: boolean) => {
       const factor = shiftKey ? 0.01 : 0.005;
       rotationRef.current.x += deltaY * factor;
-      rotationRef.current.z -= deltaX * factor; // Swap x and z
+      if (shiftKey) {
+        rotationRef.current.y += deltaX * factor; // Rotate around y-axis when shift key is pressed
+      } else {
+        rotationRef.current.z += deltaX * factor; // Reverse left and right rotation
+      }
       onChange(rotationRef.current, positionRef.current, scaleRef.current);
     },
     [onChange]
