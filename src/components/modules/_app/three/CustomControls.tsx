@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Euler, Vector3 } from "three";
 
-interface CustomControlsProps {
+interface ICustomControlsProps {
   onChange: (rotation: Euler, position: Vector3, scale: number) => void;
   rotation: [number, number, number];
   position: [number, number, number];
   scale: number;
 }
 
-const CustomControls: React.FC<CustomControlsProps> = ({
+const CustomControls: FC<ICustomControlsProps> = ({
   onChange,
   rotation,
   position,
