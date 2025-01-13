@@ -51,6 +51,9 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
     scale: 1,
   });
 
+  //General data
+  const [generalData, setGeneralData] = useState({ name: "", imgPath: "" });
+
   const controlChangeHandler = (
     newRotation: Euler,
     newPosition: Vector3,
@@ -91,13 +94,21 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
       scale: value,
     }));
   };
+
+  const changeName = (value: string) => {
+    setGeneralData((prev) => {
+      return { ...prev, name: value };
+    });
+  };
   return (
     <>
       <ModelToolbar
+        name={generalData.name}
         rotation={controls.rotation}
         position={controls.position}
         scale={controls.scale}
         lights={lights}
+        setName={changeName}
         setRotation={changeRotation}
         setPosition={changePosition}
         setScale={changeScale}

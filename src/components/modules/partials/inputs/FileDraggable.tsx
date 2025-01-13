@@ -1,5 +1,6 @@
 import convertFBXToGLB from "@/utils/fbxToGltfConverter";
 import getFileUrl from "@/utils/getFileUrl";
+import Image from "next/image";
 import React, { ChangeEvent, DragEvent, FC } from "react";
 
 interface IFilterInputProps {
@@ -44,10 +45,12 @@ const FileDraggable: FC<IFilterInputProps> = ({ onFileSelect }) => {
         <div className="w-full h-full">
           <div className="relative h-full rounded-lg border-2 border-blue-500 bg-gray-800 flex justify-center items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <div className="absolute flex flex-col items-center">
-              <img
-                alt="File Icon"
-                className="mb-3"
-                src="https://img.icons8.com/dusk/64/000000/file.png"
+              <Image
+                src="/assets/file.png"
+                alt="File icon"
+                width={80}
+                height={80}
+                className="mb-5"
               />
               <span className="block text-gray-500 font-semibold">
                 Drag & drop your files here

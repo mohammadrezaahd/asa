@@ -8,10 +8,12 @@ import { Accordions } from "@/components/modules/partials/accordions";
 import { ILight } from "@/types/components/global/controls";
 
 interface IModelToolbarProps {
+  name: string;
   rotation: [number, number, number];
   position: [number, number, number];
   scale: number;
   lights: ILight[];
+  setName: (name: string) => void;
   setRotation: (x: number, y: number, z: number) => void;
   setPosition: (x: number, y: number, z: number) => void;
   setScale: (value: number) => void;
@@ -19,10 +21,12 @@ interface IModelToolbarProps {
 }
 
 const ModelToolbar: FC<IModelToolbarProps> = ({
+  name,
   rotation,
   position,
   scale,
   lights,
+  setName,
   setRotation,
   setPosition,
   setScale,
@@ -51,10 +55,12 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
           </div>
         </div>
         <ModelToolbarBody
+          name={name}
           rotation={rotation}
           position={position}
           scale={scale}
           lights={lights}
+          setName={setName}
           setRotation={setRotation}
           setPosition={setPosition}
           setScale={setScale}

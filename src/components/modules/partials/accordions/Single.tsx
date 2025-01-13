@@ -16,7 +16,7 @@ const SingleAccordion: FC<ISingleAccordionProps> = ({
   toggleElementRef,
 }) => {
   const [header, body] = Array.isArray(children) ? children : [null, children];
-  const [whichOpen, setWhichOpen] = useState<number>(1);
+  const [whichOpen, setWhichOpen] = useState<number>(0);
 
   const openAccordionHandler = () => {
     setWhichOpen((prev) => (prev === 1 ? 0 : 1));
