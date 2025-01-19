@@ -25,7 +25,6 @@ const convertFBXToGLB = async (fileList: FileList): Promise<File[]> => {
               type: "model/gltf-binary",
             });
 
-            // استخراج نام فایل اصلی و اضافه کردن پسوند converted
             const originalName = file.name.replace(/\.[^/.]+$/, "");
             const glbFileName = `${originalName}-converted.glb`;
 

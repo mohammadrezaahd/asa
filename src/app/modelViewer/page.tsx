@@ -24,7 +24,10 @@ const CreateModel = () => {
   return (
     <>
       {(fileUrl && <ModelViewer fileUrl={fileUrl} />) || (
-        <Inputs.FileDraggable onFileSelect={fileInputHandler} />
+        <Inputs.FileDraggable
+          onFileSelect={fileInputHandler}
+          fileFormat={[".fbx"]}
+        />
       )}
     </>
   );

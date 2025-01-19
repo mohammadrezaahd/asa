@@ -52,7 +52,10 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
   });
 
   //General data
-  const [generalData, setGeneralData] = useState({ name: "", imgPath: "" });
+  const [generalData, setGeneralData] = useState({
+    name: "",
+    img: { fileUrl: "", file: new File([], "") },
+  });
 
   const controlChangeHandler = (
     newRotation: Euler,
@@ -100,6 +103,13 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
       return { ...prev, name: value };
     });
   };
+
+  const changeImage = (file: File, fileUrl: string) => {
+    setGeneralData((prev) => {
+      return { ...prev, img: { file, fileUrl } };
+    });
+  };
+
   return (
     <>
       <ModelToolbar
@@ -108,11 +118,13 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
         position={controls.position}
         scale={controls.scale}
         lights={lights}
+        img={generalData.img}
         setName={changeName}
         setRotation={changeRotation}
         setPosition={changePosition}
         setScale={changeScale}
         setLights={setLights}
+        setImg={changeImage}
       />
       <Canvas style={{ height: "100vh" }} shadows>
         <group

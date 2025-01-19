@@ -18,6 +18,8 @@ interface IModelToolbarProps {
   setPosition: (x: number, y: number, z: number) => void;
   setScale: (value: number) => void;
   setLights: (lights: ILight[]) => void;
+  img: Record<"file" | "fileUrl", File | string>;
+  setImg: (file: File, fileUrl: string) => void;
 }
 
 const ModelToolbar: FC<IModelToolbarProps> = ({
@@ -26,11 +28,13 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
   position,
   scale,
   lights,
+  img,
   setName,
   setRotation,
   setPosition,
   setScale,
   setLights,
+  setImg,
 }) => {
   const dragRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLDivElement>(null);
@@ -60,11 +64,13 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
           position={position}
           scale={scale}
           lights={lights}
+          img={img}
           setName={setName}
           setRotation={setRotation}
           setPosition={setPosition}
           setScale={setScale}
           setLights={setLights}
+          setImg={setImg}
         />
       </Accordions.SingleAccordion>
     </DragComponents>

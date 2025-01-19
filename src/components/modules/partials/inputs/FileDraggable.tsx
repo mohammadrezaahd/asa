@@ -1,38 +1,47 @@
 import convertFBXToGLB from "@/utils/fbxToGltfConverter";
+import getFileFormat from "@/utils/getFileFormat";
 import getFileUrl from "@/utils/getFileUrl";
 import Image from "next/image";
 import React, { ChangeEvent, DragEvent, FC } from "react";
 
 interface IFilterInputProps {
   onFileSelect: (fileUrl: string, file: File) => void;
+  fileFormat: string[];
 }
 
-const FileDraggable: FC<IFilterInputProps> = ({ onFileSelect }) => {
+const FileDraggable: FC<IFilterInputProps> = ({
+  onFileSelect,
+  fileFormat = [".fbx"],
+}) => {
+  const fileConvertHandler = async (file: FileList | null) => {
+    let fileUrl = undefined;
+    let outPutFile = undefined;
+    if (file) {
+      if (getFileFormat(file) === "fbx") {
+        outPutFile = await convertFBXToGLB(file);
+      } else {
+        outPutFile = file;
+      }
+      fileUrl = getFileUrl(outPutFile);
+      if (fileUrl && outPutFile) {
+        onFileSelect(fileUrl, outPutFile[0]);
+      }
+    }
+  };
+
   const dragOverHandler = (event: DragEvent<HTMLElement>) => {
     event.preventDefault();
   };
 
-  const dropHandler = async (event: DragEvent<HTMLElement>) => {
+  const dropHandler = (event: DragEvent<HTMLElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files;
-    if (file) {
-      const convertedFile = await convertFBXToGLB(file);
-      const fileUrl = getFileUrl(convertedFile);
-      if (fileUrl) {
-        onFileSelect(fileUrl, convertedFile[0]);
-      }
-    }
+    fileConvertHandler(file);
   };
 
-  const fileChangeHandler = async (event: ChangeEvent<HTMLInputElement>) => {
+  const fileChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files;
-    if (file) {
-      const convertedFile = await convertFBXToGLB(file);
-      const fileUrl = getFileUrl(convertedFile);
-      if (fileUrl) {
-        onFileSelect(fileUrl, convertedFile[0]);
-      }
-    }
+    fileConvertHandler(file);
   };
 
   return (
@@ -64,6 +73,7 @@ const FileDraggable: FC<IFilterInputProps> = ({ onFileSelect }) => {
               name=""
               className="h-full w-full opacity-0 cursor-pointer"
               type="file"
+              accept={fileFormat.join(" ")}
             />
           </div>
         </div>

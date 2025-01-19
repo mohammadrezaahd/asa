@@ -13,6 +13,8 @@ interface IModelToolbarBodyProps {
   setPosition: (x: number, y: number, z: number) => void;
   setScale: (value: number) => void;
   setLights: (lights: ILight[]) => void;
+  img: Record<"file" | "fileUrl", File | string>;
+  setImg: (file: File, fileUrl: string) => void;
 }
 
 const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
@@ -21,11 +23,13 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
   position,
   scale,
   lights,
+  img,
   setName,
   setRotation,
   setPosition,
   setScale,
   setLights,
+  setImg,
 }) => {
   return (
     <div className="px-2 w-full max-h-screen overflow-scroll overflow-x-hidden">
@@ -34,6 +38,7 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
       <ToolbarBody.Position position={position} setPosition={setPosition} />
       <ToolbarBody.Lights lights={lights} onLightsChange={setLights} />
       <ToolbarBody.Scale scale={scale} setScale={setScale} />
+      <ToolbarBody.Image img={img} setImg={setImg} />
     </div>
   );
 };
