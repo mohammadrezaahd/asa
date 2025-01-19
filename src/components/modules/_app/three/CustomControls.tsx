@@ -48,7 +48,8 @@ const CustomControls: FC<ICustomControlsProps> = ({
   const updateScale = useCallback(
     (scaleFactor: number) => {
       scaleRef.current *= scaleFactor;
-      scaleRef.current = Math.max(0.1, Math.min(20, scaleRef.current));
+      // Remove or adjust the maximum limit as needed
+      scaleRef.current = Math.max(0.1, scaleRef.current);
       onChange(rotationRef.current, positionRef.current, scaleRef.current);
     },
     [onChange]

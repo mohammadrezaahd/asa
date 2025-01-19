@@ -48,7 +48,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
   const [controls, setControls] = useState({
     rotation: [-Math.PI / 2, 0, Math.PI] as [number, number, number],
     position: [0, 0, 0] as [number, number, number],
-    scale: 1,
+    scale: 30,
   });
 
   //General data
@@ -127,11 +127,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
         setImg={changeImage}
       />
       <Canvas style={{ height: "100vh" }} shadows>
-        <group
-          position={controls.position}
-          rotation={controls.rotation}
-          scale={controls.scale}
-        >
+        <group position={controls.position} rotation={controls.rotation}>
           <Model fileUrl={fileUrl} />
         </group>
         <Lights lights={lights} key={JSON.stringify(lights)} />
@@ -142,7 +138,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
           position={controls.position}
           scale={controls.scale}
         />
-        <PerspectiveCamera makeDefault position={[0, 0, 20]} />
+        <PerspectiveCamera makeDefault position={[0, 0, controls.scale]} />
       </Canvas>
     </>
   );

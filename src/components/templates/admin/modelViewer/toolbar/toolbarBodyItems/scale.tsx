@@ -32,15 +32,14 @@ const Scale: FC<IScaleProps> = ({ scale, setScale }) => {
       </span>
       <div>
         <Inputs.LabeledNumberAmountButtons
-          //   labelIcon={<FaX />}
           value={scaleValue}
           setValue={(value) => rotationChangeHandler(value)}
-          step={0.01}
-          negatable={true}
+          step={1}
+          negatable={false}
         />
       </div>
     </Accordions.SingleAccordion>
   );
 };
 
-export default Scale
+export default Scale;
