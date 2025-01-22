@@ -1,8 +1,10 @@
+import { Tooltips } from "@/components/modules/partials/tooltips";
+
 const Test = () => {
   return (
-    <>
-      <div className="bg-blue-gray-900"></div>
-    </>
+    <Tooltips.Basic content="Asdasd">
+      <div>asd</div>
+    </Tooltips.Basic>
   );
 };
 

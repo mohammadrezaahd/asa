@@ -1,4 +1,5 @@
 import FileDraggable from "@/components/modules/partials/inputs/FileDraggable";
+import { Tooltips } from "@/components/modules/partials/tooltips";
 import Image from "next/image";
 import { FC, useRef } from "react";
 
@@ -23,29 +24,31 @@ const Thumbnail: FC<IThumbnail> = ({ img, setImg }) => {
   return (
     <div className="w-full">
       {img.fileUrl ? (
-        <>
-          <Image
-            src={img.fileUrl as string}
-            alt="File icon"
-            width={100}
-            height={100}
-            className="mb-5 w-full h-52 object-cover object-center cursor-pointer"
-            onClick={handleImageClick}
-          />
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".jpg,.png,.jpeg"
-            className="hidden"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                const file = e.target.files[0];
-                const fileUrl = URL.createObjectURL(file);
-                fileInputHandler(fileUrl, file);
-              }
-            }}
-          />
-        </>
+        <Tooltips.Basic content="Replace photo">
+          <div>
+            <Image
+              src={img.fileUrl as string}
+              alt="File icon"
+              width={100}
+              height={100}
+              className="mb-5 w-full h-52 object-cover object-center cursor-pointer"
+              onClick={handleImageClick}
+            />
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".jpg,.png,.jpeg"
+              className="hidden"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  const file = e.target.files[0];
+                  const fileUrl = URL.createObjectURL(file);
+                  fileInputHandler(fileUrl, file);
+                }
+              }}
+            />
+          </div>
+        </Tooltips.Basic>
       ) : (
         <FileDraggable
           onFileSelect={fileInputHandler}
