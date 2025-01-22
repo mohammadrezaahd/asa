@@ -59,7 +59,7 @@ const FileDraggable: FC<IFilterInputProps> = ({
   return (
     <>
       {!isPageLoaded ? (
-        <Loading type="basic" />
+        <Loading type="box" />
       ) : (
         <div
           className="rounded-lg overflow-hidden h-screen"
