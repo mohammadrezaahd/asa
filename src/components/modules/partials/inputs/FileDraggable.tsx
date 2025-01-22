@@ -1,3 +1,4 @@
+import usePageLoaded from "@/hooks/pageLoadedContext";
 import convertFBXToGLB from "@/utils/fbxToGltfConverter";
 import getFileFormat from "@/utils/getFileFormat";
 import getFileUrl from "@/utils/getFileUrl";
@@ -13,7 +14,10 @@ const FileDraggable: FC<IFilterInputProps> = ({
   onFileSelect,
   fileFormat = [".fbx"],
 }) => {
+  const isPageLoaded = usePageLoaded();
+
   const fileConvertHandler = async (file: FileList | null) => {
+    if (!isPageLoaded) return;
     let fileUrl = undefined;
     let outPutFile = undefined;
     if (file) {
@@ -31,15 +35,22 @@ const FileDraggable: FC<IFilterInputProps> = ({
 
   const dragOverHandler = (event: DragEvent<HTMLElement>) => {
     event.preventDefault();
+    if (!isPageLoaded) {
+      event.dataTransfer.dropEffect = "none";
+    } else {
+      event.dataTransfer.dropEffect = "copy";
+    }
   };
 
   const dropHandler = (event: DragEvent<HTMLElement>) => {
     event.preventDefault();
+    if (!isPageLoaded) return;
     const file = event.dataTransfer.files;
     fileConvertHandler(file);
   };
 
   const fileChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!isPageLoaded) return;
     const file = event.target.files;
     fileConvertHandler(file);
   };
@@ -47,7 +58,7 @@ const FileDraggable: FC<IFilterInputProps> = ({
   return (
     <div
       className="rounded-lg overflow-hidden h-screen"
-      onDragEnd={dragOverHandler}
+      onDragOver={dragOverHandler}
       onDrop={dropHandler}
     >
       <div className="md:flex h-full">
@@ -71,9 +82,12 @@ const FileDraggable: FC<IFilterInputProps> = ({
             <input
               onChange={fileChangeHandler}
               name=""
-              className="h-full w-full opacity-0 cursor-pointer"
               type="file"
-              accept={fileFormat.join(" ")}
+              accept={fileFormat.join(",")}
+              className={`h-full w-full opacity-0 ${
+                isPageLoaded ? "cursor-pointer" : "cursor-not-allowed"
+              }`}
+              disabled={!isPageLoaded}
             />
           </div>
         </div>

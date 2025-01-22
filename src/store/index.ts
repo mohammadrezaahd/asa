@@ -1,9 +1,9 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import TDModelReducer from "./model";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import ThemeConfigReducer from "./themeConfig";
 
 const rootReducer = combineReducers({
-  TDModel: TDModelReducer,
+  ThemConfig: ThemeConfigReducer,
 });
 
 const store = configureStore({
