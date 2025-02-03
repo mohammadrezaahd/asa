@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     const title = formData.get("title");
     const file = formData.get("file");
 
-    const fileName = await filePathGenerator(file);
+    const fileName = await filePathGenerator(file, "harchi");
 
     const model = await modelsModel.create({
       title,

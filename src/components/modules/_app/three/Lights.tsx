@@ -1,4 +1,4 @@
-import { ILight } from "@/types/components/global/controls";
+import { ILight } from "@/interfaces/components/global/controls";
 import { FC, Fragment } from "react";
 
 interface ILightsProps {

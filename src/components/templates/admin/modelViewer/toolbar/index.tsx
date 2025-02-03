@@ -5,7 +5,7 @@ import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import { PiDotsSixBold } from "react-icons/pi";
 import ModelToolbarBody from "./toolbarBody";
 import { Accordions } from "@/components/modules/partials/accordions";
-import { ILight } from "@/types/components/global/controls";
+import { ILight } from "@/interfaces/components/global/controls";
 
 interface IModelToolbarProps {
   name: string;
@@ -13,12 +13,13 @@ interface IModelToolbarProps {
   position: [number, number, number];
   scale: number;
   lights: ILight[];
+  img: Record<"file" | "fileUrl", File | string>;
+  file: File;
   setName: (name: string) => void;
   setRotation: (x: number, y: number, z: number) => void;
   setPosition: (x: number, y: number, z: number) => void;
   setScale: (value: number) => void;
   setLights: (lights: ILight[]) => void;
-  img: Record<"file" | "fileUrl", File | string>;
   setImg: (file: File, fileUrl: string) => void;
 }
 
@@ -29,6 +30,7 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
   scale,
   lights,
   img,
+  file,
   setName,
   setRotation,
   setPosition,
@@ -65,6 +67,7 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
           scale={scale}
           lights={lights}
           img={img}
+          file={file}
           setName={setName}
           setRotation={setRotation}
           setPosition={setPosition}

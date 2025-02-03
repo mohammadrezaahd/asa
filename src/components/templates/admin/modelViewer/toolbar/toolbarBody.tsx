@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { ToolbarBody } from "./toolbarBodyItems";
-import { ILight } from "@/types/components/global/controls";
+import { ILight } from "@/interfaces/components/global/controls";
 
 interface IModelToolbarBodyProps {
   name: string;
@@ -8,12 +8,13 @@ interface IModelToolbarBodyProps {
   position: [number, number, number];
   scale: number;
   lights: ILight[];
+  img: Record<"file" | "fileUrl", File | string>;
+  file: File;
   setName: (name: string) => void;
   setRotation: (x: number, y: number, z: number) => void;
   setPosition: (x: number, y: number, z: number) => void;
   setScale: (value: number) => void;
   setLights: (lights: ILight[]) => void;
-  img: Record<"file" | "fileUrl", File | string>;
   setImg: (file: File, fileUrl: string) => void;
 }
 
@@ -24,6 +25,7 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
   scale,
   lights,
   img,
+  file,
   setName,
   setRotation,
   setPosition,
@@ -39,6 +41,17 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
       <ToolbarBody.Lights lights={lights} onLightsChange={setLights} />
       <ToolbarBody.Scale scale={scale} setScale={setScale} />
       <ToolbarBody.Image img={img} setImg={setImg} />
+      <ToolbarBody.SubmitBtn
+        data={{
+          title: name,
+          thumbnail: img.file as File,
+          scale: scale,
+          lights: lights,
+          position: position,
+          rotation: rotation,
+          file: file,
+        }}
+      />
     </div>
   );
 };

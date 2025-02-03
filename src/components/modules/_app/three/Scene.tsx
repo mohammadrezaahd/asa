@@ -6,13 +6,14 @@ import { Euler, Vector3 } from "three";
 import CustomControls from "./CustomControls";
 import ModelToolbar from "@/components/templates/admin/modelViewer/toolbar";
 import Lights from "./Lights";
-import { ILight } from "@/types/components/global/controls";
+import { ILight } from "@/interfaces/components/global/controls";
 import { constants } from "../../../../constants";
 
 interface ISceneProps {
   fileUrl: string;
+  file: File;
 }
-const Scene: FC<ISceneProps> = ({ fileUrl }) => {
+const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
   //Lights
   const [lights, setLights] = useState<ILight[]>(
     constants.lightTypes.map((type, index) => ({
@@ -119,6 +120,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl }) => {
         scale={controls.scale}
         lights={lights}
         img={generalData.img}
+        file={file}
         setName={changeName}
         setRotation={changeRotation}
         setPosition={changePosition}

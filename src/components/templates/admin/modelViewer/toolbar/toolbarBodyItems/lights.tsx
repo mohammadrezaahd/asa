@@ -2,7 +2,7 @@ import { FC, useRef } from "react";
 import { Accordions } from "@/components/modules/partials/accordions";
 import { Inputs } from "@/components/modules/partials/inputs";
 import { FaX, FaY, FaZ } from "react-icons/fa6";
-import { ILight } from "@/types/components/global/controls";
+import { ILight } from "@/interfaces/components/global/controls";
 
 interface ILightsManagerProps {
   lights: ILight[];
