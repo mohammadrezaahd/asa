@@ -8,6 +8,7 @@ interface ILabeledNumberAmountButtonsProps {
   description?: string;
   step?: number;
   negatable?: boolean;
+  isDisabled?: boolean;
   value: number;
   setValue: (value: number) => void;
 }
@@ -19,6 +20,7 @@ const LabeledNumberAmountButtons: FC<ILabeledNumberAmountButtonsProps> = ({
   negatable = false,
   step = 1,
   value = 0,
+  isDisabled = false,
   setValue,
 }) => {
   return (
@@ -48,6 +50,7 @@ const LabeledNumberAmountButtons: FC<ILabeledNumberAmountButtonsProps> = ({
           containerProps={{
             className: "min-w-0",
           }}
+          disabled={isDisabled}
         />
         <div className="absolute right-1 top-1 flex gap-0.5">
           <IconButton

@@ -58,6 +58,11 @@ const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
     img: { fileUrl: "", file: new File([], "") },
   });
 
+  const [magnifier, setMagnifier] = useState({
+    isActive: false,
+    value: 15,
+  });
+
   const controlChangeHandler = (
     newRotation: Euler,
     newPosition: Vector3,
@@ -120,6 +125,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
         scale={controls.scale}
         lights={lights}
         img={generalData.img}
+        magnifier={magnifier}
         file={file}
         setName={changeName}
         setRotation={changeRotation}
@@ -127,9 +133,14 @@ const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
         setScale={changeScale}
         setLights={setLights}
         setImg={changeImage}
+        setMagnifier={setMagnifier}
       />
       <Canvas style={{ height: "100vh" }} shadows>
-        <group position={controls.position} rotation={controls.rotation}>
+        <group
+          position={controls.position}
+          rotation={controls.rotation}
+          scale={magnifier.isActive ? magnifier.value : 5}
+        >
           <Model fileUrl={fileUrl} />
         </group>
         <Lights lights={lights} key={JSON.stringify(lights)} />

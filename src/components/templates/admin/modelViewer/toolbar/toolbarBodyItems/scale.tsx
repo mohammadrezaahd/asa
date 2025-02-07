@@ -1,13 +1,21 @@
 import { Accordions } from "@/components/modules/partials/accordions";
 import { Inputs } from "@/components/modules/partials/inputs";
 import { FC, useCallback, useRef, useState, useEffect } from "react";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 interface IScaleProps {
   scale: number;
   setScale: (value: number) => void;
+  magnifier: { value: number; isActive: boolean };
+  setMagnifier: (magnifier: { value: number; isActive: boolean }) => void;
 }
 
-const Scale: FC<IScaleProps> = ({ scale, setScale }) => {
+const Scale: FC<IScaleProps> = ({
+  scale,
+  setScale,
+  magnifier,
+  setMagnifier,
+}) => {
   const scaleAccordionToggleRef = useRef(null);
   const [scaleValue, setScaleValue] = useState(scale);
 
@@ -25,6 +33,20 @@ const Scale: FC<IScaleProps> = ({ scale, setScale }) => {
     [setScale]
   );
 
+  const magnifierValueChangeHandler = useCallback(
+    (value: number) => {
+      setMagnifier({ ...magnifier, value });
+    },
+    [magnifier, setMagnifier]
+  );
+
+  const magnifierActiveChangeHandler = useCallback(
+    (isActive: boolean) => {
+      setMagnifier({ ...magnifier, isActive });
+    },
+    [magnifier, setMagnifier]
+  );
+
   return (
     <Accordions.SingleAccordion toggleElementRef={scaleAccordionToggleRef}>
       <span className="text-sm" ref={scaleAccordionToggleRef}>
@@ -36,6 +58,19 @@ const Scale: FC<IScaleProps> = ({ scale, setScale }) => {
           setValue={(value) => rotationChangeHandler(value)}
           step={1}
           negatable={false}
+        />
+        <Inputs.LabeledNumberAmountButtons
+          labelIcon={<FaMagnifyingGlass />}
+          labelText="Magnifier"
+          value={magnifier.value}
+          setValue={magnifierValueChangeHandler}
+          step={5}
+          negatable={false}
+          isDisabled={!magnifier.isActive}
+        />
+        <Inputs.Switch
+          value={magnifier.isActive}
+          setValue={magnifierActiveChangeHandler}
         />
       </div>
     </Accordions.SingleAccordion>

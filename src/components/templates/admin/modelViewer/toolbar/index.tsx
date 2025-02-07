@@ -15,12 +15,14 @@ interface IModelToolbarProps {
   lights: ILight[];
   img: Record<"file" | "fileUrl", File | string>;
   file: File;
+  magnifier: { value: number; isActive: boolean };
   setName: (name: string) => void;
   setRotation: (x: number, y: number, z: number) => void;
   setPosition: (x: number, y: number, z: number) => void;
   setScale: (value: number) => void;
   setLights: (lights: ILight[]) => void;
   setImg: (file: File, fileUrl: string) => void;
+  setMagnifier: (magnifier: { value: number; isActive: boolean }) => void;
 }
 
 const ModelToolbar: FC<IModelToolbarProps> = ({
@@ -37,6 +39,8 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
   setScale,
   setLights,
   setImg,
+  magnifier,
+  setMagnifier,
 }) => {
   const dragRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLDivElement>(null);
@@ -74,6 +78,8 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
           setScale={setScale}
           setLights={setLights}
           setImg={setImg}
+          magnifier={magnifier}
+          setMagnifier={setMagnifier}
         />
       </Accordions.SingleAccordion>
     </DragComponents>

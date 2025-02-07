@@ -10,12 +10,14 @@ interface IModelToolbarBodyProps {
   lights: ILight[];
   img: Record<"file" | "fileUrl", File | string>;
   file: File;
+  magnifier: { value: number; isActive: boolean };
   setName: (name: string) => void;
   setRotation: (x: number, y: number, z: number) => void;
   setPosition: (x: number, y: number, z: number) => void;
   setScale: (value: number) => void;
   setLights: (lights: ILight[]) => void;
   setImg: (file: File, fileUrl: string) => void;
+  setMagnifier: (magnifier: { value: number; isActive: boolean }) => void;
 }
 
 const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
@@ -32,6 +34,8 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
   setScale,
   setLights,
   setImg,
+  magnifier,
+  setMagnifier,
 }) => {
   return (
     <div className="px-2 w-full max-h-screen overflow-scroll overflow-x-hidden">
@@ -39,7 +43,7 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
       <ToolbarBody.Rotation rotation={rotation} setRotation={setRotation} />
       <ToolbarBody.Position position={position} setPosition={setPosition} />
       <ToolbarBody.Lights lights={lights} onLightsChange={setLights} />
-      <ToolbarBody.Scale scale={scale} setScale={setScale} />
+      <ToolbarBody.Scale scale={scale} setScale={setScale} magnifier={magnifier} setMagnifier={setMagnifier} />
       <ToolbarBody.Image img={img} setImg={setImg} />
       <ToolbarBody.SubmitBtn
         data={{
