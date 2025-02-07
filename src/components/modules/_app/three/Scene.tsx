@@ -18,27 +18,43 @@ const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
   const [lights, setLights] = useState<ILight[]>(
     constants.lightTypes.map((type, index) => ({
       type,
-      color: "#ffffff",
+      color:
+        type === "Ambient"
+          ? "#ffffff"
+          : type === "Directional"
+          ? "#f8d898"
+          : type === "Point"
+          ? "#ffddaa"
+          : type === "Spot"
+          ? "#aaffaa"
+          : "#ffffff",
       isVisible: true,
-      position: [0, 0, 0],
+      position:
+        type === "Directional"
+          ? [5, 10, 5]
+          : type === "Point"
+          ? [0, 5, 0]
+          : type === "Spot"
+          ? [2, 8, 2]
+          : [0, 0, 0],
       setColor: (color: string) => {
         setLights((prev) => {
           const newLights = [...prev];
-          newLights[index].color = color;
+          newLights[index] = { ...newLights[index], color };
           return newLights;
         });
       },
       setIsVisible: (isVisible: boolean) => {
         setLights((prev) => {
           const newLights = [...prev];
-          newLights[index].isVisible = isVisible;
+          newLights[index] = { ...newLights[index], isVisible };
           return newLights;
         });
       },
       setPosition: (x: number, y: number, z: number) => {
         setLights((prev) => {
           const newLights = [...prev];
-          newLights[index].position = [x, y, z];
+          newLights[index] = { ...newLights[index], position: [x, y, z] };
           return newLights;
         });
       },
