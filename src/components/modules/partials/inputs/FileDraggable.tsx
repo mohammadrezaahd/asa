@@ -9,11 +9,13 @@ import Loading from "../loaders";
 interface IFilterInputProps {
   onFileSelect: (fileUrl: string, file: File) => void;
   fileFormat: string[];
+  className?: string;
 }
 
 const FileDraggable: FC<IFilterInputProps> = ({
   onFileSelect,
-  fileFormat = [".fbx"],
+  fileFormat = [".gbl"],
+  className,
 }) => {
   const isPageLoaded = usePageLoaded();
 
@@ -62,7 +64,7 @@ const FileDraggable: FC<IFilterInputProps> = ({
         <Loading type="box" />
       ) : (
         <div
-          className="rounded-lg overflow-hidden h-screen"
+          className={`rounded-lg overflow-hidden h-screen ${className}`}
           onDragOver={dragOverHandler}
           onDrop={dropHandler}
         >

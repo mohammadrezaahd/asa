@@ -22,7 +22,7 @@ const Thumbnail: FC<IThumbnail> = ({ img, setImg }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[200px]">
       {img.fileUrl ? (
         <Tooltips.Basic content="Replace photo">
           <div>
@@ -53,6 +53,7 @@ const Thumbnail: FC<IThumbnail> = ({ img, setImg }) => {
         <FileDraggable
           onFileSelect={fileInputHandler}
           fileFormat={[".jpg", ".png", ".jpeg"]}
+          className="!h-full"
         />
       )}
     </div>

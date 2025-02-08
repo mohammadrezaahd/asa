@@ -9,6 +9,26 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  position: {
+    type: [Number, Number, Number],
+    required: true,
+  },
+  rotation: {
+    type: [Number, Number, Number],
+    required: true,
+  },
+  scale: {
+    type: Number,
+    required: true,
+  },
+  thumbnail: {
+    type: String,
+    required: true,
+  },
+  lights: {
+    type: Array,
+    required: true,
+  },
 });
 
 const modelSchema = { title: "Model", schema };

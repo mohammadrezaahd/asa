@@ -1,19 +1,18 @@
-const env = process.env;
 const environments = {
   server: {
-    db_username: env.DB_USERNAME,
-    db_pwd: env.DB_PWD,
-    db_server: env.DB_SERVER,
-    db_port: env.DB_PORT,
-    db_name: env.DB_NAME,
+    db_username: process.env.NEXT_PUBLIC_DB_USERNAME,
+    db_pwd: process.env.NEXT_PUBLIC_DB_PWD,
+    db_server: process.env.NEXT_PUBLIC_DB_SERVER,
+    db_port: process.env.NEXT_PUBLIC_DB_PORT,
+    db_name: process.env.NEXT_PUBLIC_DB_NAME,
   },
   uri: {
-    base_url: env.BASE_URL,
-    api_url: env.API_URL,
+    base_url: process.env.NEXT_PUBLIC_BASE_URL,
+    api_url: process.env.NEXT_PUBLIC_API_URL,
   },
   storage: {
-    storage_directory: env.STORAGE_DIRECTORY,
-    storage_folder: env.STORAGE_FOLDER,
+    storage_directory: process.env.NEXT_PUBLIC_STORAGE_DIRECTORY,
+    storage_folder: process.env.NEXT_PUBLIC_STORAGE_FOLDER,
   },
 };
 
