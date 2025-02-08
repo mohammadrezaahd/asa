@@ -1,4 +1,4 @@
-import { Accordions } from "@/components/modules/partials/accordions";
+import AppAccordion from "@/components/modules/partials/accordions/Accordion";
 import { Inputs } from "@/components/modules/partials/inputs";
 import { FC, useCallback, useRef, useState, useEffect } from "react";
 import { FaX, FaY, FaZ } from "react-icons/fa6";
@@ -35,7 +35,7 @@ const Rotation: FC<IRotationProps> = ({ rotation, setRotation }) => {
   );
 
   return (
-    <Accordions.SingleAccordion toggleElementRef={rotationAccordionToggleRef}>
+    <AppAccordion toggleElementRef={rotationAccordionToggleRef}>
       <span className="text-sm" ref={rotationAccordionToggleRef}>
         Rotation
       </span>
@@ -62,7 +62,7 @@ const Rotation: FC<IRotationProps> = ({ rotation, setRotation }) => {
           negatable={true}
         />
       </div>
-    </Accordions.SingleAccordion>
+    </AppAccordion>
   );
 };
 

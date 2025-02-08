@@ -1,4 +1,4 @@
-import { Accordions } from "@/components/modules/partials/accordions";
+import AppAccordion from "@/components/modules/partials/accordions/Accordion";
 import { Inputs } from "@/components/modules/partials/inputs";
 import { FC, useCallback, useRef, useState, useEffect } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -48,7 +48,7 @@ const Scale: FC<IScaleProps> = ({
   );
 
   return (
-    <Accordions.SingleAccordion toggleElementRef={scaleAccordionToggleRef}>
+    <AppAccordion toggleElementRef={scaleAccordionToggleRef}>
       <span className="text-sm" ref={scaleAccordionToggleRef}>
         Scale
       </span>
@@ -73,7 +73,7 @@ const Scale: FC<IScaleProps> = ({
           setValue={magnifierActiveChangeHandler}
         />
       </div>
-    </Accordions.SingleAccordion>
+    </AppAccordion>
   );
 };
 

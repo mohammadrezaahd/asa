@@ -1,4 +1,4 @@
-import { Accordions } from "@/components/modules/partials/accordions";
+import AppAccordion from "@/components/modules/partials/accordions/Accordion";
 import { Inputs } from "@/components/modules/partials/inputs";
 import { FC, useCallback, useRef } from "react";
 import { FaX, FaY, FaZ } from "react-icons/fa6";
@@ -24,7 +24,7 @@ const Position: FC<IPositionProps> = ({ position, setPosition }) => {
   );
 
   return (
-    <Accordions.SingleAccordion toggleElementRef={positionAccordionToggleRef}>
+    <AppAccordion toggleElementRef={positionAccordionToggleRef}>
       <span className="text-sm" ref={positionAccordionToggleRef}>
         Position
       </span>
@@ -51,7 +51,7 @@ const Position: FC<IPositionProps> = ({ position, setPosition }) => {
           negatable={true}
         />
       </div>
-    </Accordions.SingleAccordion>
+    </AppAccordion>
   );
 };
 

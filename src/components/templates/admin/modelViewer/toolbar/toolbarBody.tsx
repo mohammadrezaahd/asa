@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { ToolbarBody } from "./toolbarBodyItems";
-import { ILight } from "@/interfaces/components/global/controls";
+import { ILight } from "@/interfaces/global/controls";
 
 interface IModelToolbarBodyProps {
   name: string;
@@ -43,8 +43,14 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
       <ToolbarBody.Rotation rotation={rotation} setRotation={setRotation} />
       <ToolbarBody.Position position={position} setPosition={setPosition} />
       <ToolbarBody.Lights lights={lights} onLightsChange={setLights} />
-      <ToolbarBody.Scale scale={scale} setScale={setScale} magnifier={magnifier} setMagnifier={setMagnifier} />
+      <ToolbarBody.Scale
+        scale={scale}
+        setScale={setScale}
+        magnifier={magnifier}
+        setMagnifier={setMagnifier}
+      />
       <ToolbarBody.Image img={img} setImg={setImg} />
+      <ToolbarBody.ModelGallery />
       <ToolbarBody.SubmitBtn
         data={{
           title: name,

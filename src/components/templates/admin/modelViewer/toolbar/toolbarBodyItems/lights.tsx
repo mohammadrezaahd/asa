@@ -1,8 +1,8 @@
 import { FC, useRef } from "react";
-import { Accordions } from "@/components/modules/partials/accordions";
 import { Inputs } from "@/components/modules/partials/inputs";
 import { FaX, FaY, FaZ } from "react-icons/fa6";
-import { ILight } from "@/interfaces/components/global/controls";
+import { ILight } from "@/interfaces/global/controls";
+import AppAccordion from "@/components/modules/partials/accordions/Accordion";
 
 interface ILightsManagerProps {
   lights: ILight[];
@@ -43,7 +43,7 @@ const LightsManager: FC<ILightsManagerProps> = ({ lights, onLightsChange }) => {
   };
 
   return (
-    <Accordions.SingleAccordion toggleElementRef={lightsAccordionToggleRef}>
+    <AppAccordion toggleElementRef={lightsAccordionToggleRef}>
       <span className="text-sm" ref={lightsAccordionToggleRef}>
         Lights
       </span>
@@ -89,7 +89,7 @@ const LightsManager: FC<ILightsManagerProps> = ({ lights, onLightsChange }) => {
           </div>
         ))}
       </div>
-    </Accordions.SingleAccordion>
+    </AppAccordion>
   );
 };
 

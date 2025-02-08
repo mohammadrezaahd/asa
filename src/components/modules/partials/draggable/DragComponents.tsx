@@ -1,12 +1,12 @@
 "use client";
-import { ReactNode, useState, useEffect, useCallback } from "react";
+import { ReactNode, useState, useEffect, useCallback, FC } from "react";
 
-interface DragComponentsProps {
+interface IDragComponentsProps {
   children: ReactNode;
   handleRef: React.RefObject<HTMLDivElement>;
 }
 
-const DragComponents: React.FC<DragComponentsProps> = ({
+const DragComponents: FC<IDragComponentsProps> = ({
   children,
   handleRef,
 }) => {

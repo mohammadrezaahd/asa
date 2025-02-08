@@ -6,13 +6,13 @@ import Image from "next/image";
 import React, { ChangeEvent, DragEvent, FC } from "react";
 import Loading from "../loaders";
 
-interface IFilterInputProps {
+interface IFileInputProps {
   onFileSelect: (fileUrl: string, file: File) => void;
   fileFormat: string[];
   className?: string;
 }
 
-const FileDraggable: FC<IFilterInputProps> = ({
+const FileDraggable: FC<IFileInputProps> = ({
   onFileSelect,
   fileFormat = [".gbl"],
   className,

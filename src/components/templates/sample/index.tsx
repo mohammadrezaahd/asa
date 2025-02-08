@@ -1,10 +1,10 @@
-import { Tooltips } from "@/components/modules/partials/tooltips";
+import AppTooltip from "@/components/modules/partials/tooltips/Tooltip";
 
 const Test = () => {
   return (
-    <Tooltips.Basic content="Asdasd">
+    <AppTooltip content="Asdasd">
       <div>asd</div>
-    </Tooltips.Basic>
+    </AppTooltip>
   );
 };
 

@@ -1,14 +1,14 @@
 import { Tooltip } from "@material-tailwind/react";
 import { FC, ReactNode } from "react";
 
-interface IBasicTooltipProps {
+interface IAppTooltipProps {
   placement?: string;
   className?: string;
   content: ReactNode | string;
   children: ReactNode;
 }
 
-const Basic: FC<IBasicTooltipProps> = ({
+const AppTooltip: FC<IAppTooltipProps> = ({
   placement = "top",
   content,
   children,
@@ -25,4 +25,4 @@ const Basic: FC<IBasicTooltipProps> = ({
   );
 };
 
-export default Basic;
+export default AppTooltip;

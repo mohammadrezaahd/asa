@@ -1,11 +1,11 @@
 "use client";
-import DragComponents from "@/components/modules/partials/draggable";
+import DragComponents from "@/components/modules/partials/draggable/DragComponents";
 import { FC, useRef, useState } from "react";
 import { IoIosArrowUp, IoIosSearch } from "react-icons/io";
 import { PiDotsSixBold } from "react-icons/pi";
 import ModelToolbarBody from "./toolbarBody";
-import { Accordions } from "@/components/modules/partials/accordions";
-import { ILight } from "@/interfaces/components/global/controls";
+import { ILight } from "@/interfaces/global/controls";
+import AppAccordion from "@/components/modules/partials/accordions/Accordion";
 
 interface IModelToolbarProps {
   name: string;
@@ -48,7 +48,7 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
 
   return (
     <DragComponents handleRef={dragRef}>
-      <Accordions.SingleAccordion toggleElementRef={toggleRef}>
+      <AppAccordion toggleElementRef={toggleRef}>
         <div className="flex w-full px-2 justify-between">
           <div
             ref={toggleRef}
@@ -81,7 +81,7 @@ const ModelToolbar: FC<IModelToolbarProps> = ({
           magnifier={magnifier}
           setMagnifier={setMagnifier}
         />
-      </Accordions.SingleAccordion>
+      </AppAccordion>
     </DragComponents>
   );
 };

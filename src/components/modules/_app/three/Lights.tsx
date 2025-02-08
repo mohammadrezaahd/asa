@@ -1,4 +1,4 @@
-import { ILight } from "@/interfaces/components/global/controls";
+import { ILight } from "@/interfaces/global/controls";
 import {
   Bloom,
   ToneMapping,

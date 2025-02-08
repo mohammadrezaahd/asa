@@ -1,5 +1,5 @@
 import FileDraggable from "@/components/modules/partials/inputs/FileDraggable";
-import { Tooltips } from "@/components/modules/partials/tooltips";
+import AppTooltip from "@/components/modules/partials/tooltips/Tooltip";
 import Image from "next/image";
 import { FC, useRef } from "react";
 
@@ -24,7 +24,7 @@ const Thumbnail: FC<IThumbnail> = ({ img, setImg }) => {
   return (
     <div className="w-full h-[200px]">
       {img.fileUrl ? (
-        <Tooltips.Basic content="Replace photo">
+        <AppTooltip content="Replace photo">
           <div>
             <Image
               src={img.fileUrl as string}
@@ -48,7 +48,7 @@ const Thumbnail: FC<IThumbnail> = ({ img, setImg }) => {
               }}
             />
           </div>
-        </Tooltips.Basic>
+        </AppTooltip>
       ) : (
         <FileDraggable
           onFileSelect={fileInputHandler}

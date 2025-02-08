@@ -6,7 +6,7 @@ import { Euler, Vector3 } from "three";
 import CustomControls from "./CustomControls";
 import ModelToolbar from "@/components/templates/admin/modelViewer/toolbar";
 import Lights from "./Lights";
-import { ILight } from "@/interfaces/components/global/controls";
+import { ILight } from "@/interfaces/global/controls";
 import { constants } from "../../../../constants";
 
 interface ISceneProps {

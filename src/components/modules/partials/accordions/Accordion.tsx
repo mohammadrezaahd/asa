@@ -6,12 +6,12 @@ import {
 } from "@material-tailwind/react";
 import { ReactNode, useState, useEffect, FC, RefObject } from "react";
 
-interface ISingleAccordionProps {
+interface IAppAccordionProps {
   children: ReactNode;
   toggleElementRef: RefObject<HTMLDivElement>;
 }
 
-const SingleAccordion: FC<ISingleAccordionProps> = ({
+const AppAccordion: FC<IAppAccordionProps> = ({
   children,
   toggleElementRef,
 }) => {
@@ -42,4 +42,4 @@ const SingleAccordion: FC<ISingleAccordionProps> = ({
   );
 };
 
-export default SingleAccordion;
+export default AppAccordion;
