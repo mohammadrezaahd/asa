@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import connectToDb from "@/server/database/connection";
 import getTable from "@/server/database/tables";
 import environments from "@/helpers/configurations";
@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
   try {
     await connectToDb();
     const modelsModel = getTable("Model");
+    const categoriesModel = getTable("Category");
 
     const formData = await req.formData();
 
@@ -20,9 +21,14 @@ export async function POST(req: NextRequest) {
     const scale = parseFloat(formData.get("scale") as string);
     const thumbnail = formData.get("thumbnail");
     const lights = JSON.parse(formData.get("lights") as string);
+    const gallery = formData.getAll("gallery") as File[];
+    const categories = JSON.parse(formData.get("categories") as string);
 
     const fileName = await filePathGenerator(file, "tdm");
     const thumbnailName = await filePathGenerator(thumbnail, "thumbs");
+    const galleryNames = await Promise.all(
+      gallery.map((item) => filePathGenerator(item, "gallery"))
+    );
 
     const model = await modelsModel.create({
       title,
@@ -32,15 +38,26 @@ export async function POST(req: NextRequest) {
       scale,
       thumbnail: `${STORAGE_FOLDER}/images/${thumbnailName}`,
       lights,
+      gallery: galleryNames.map((name) => `${STORAGE_FOLDER}/gallery/${name}`),
+      categories,
     });
-    return Response.json(
+
+    await Promise.all(
+      categories.map(async (categoryId: string) => {
+        await categoriesModel.findByIdAndUpdate(categoryId, {
+          $push: { models: model._id },
+        });
+      })
+    );
+
+    return NextResponse.json(
       { message: "Model posted successfully", data: model },
       { status: 200 }
     );
   } catch (err) {
     console.log(err);
-    return Response.json(
-      { message: "data base connected failed" },
+    return NextResponse.json(
+      { message: "Database connection failed" },
       { status: 500 }
     );
   }

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { ToolbarBody } from "./toolbarBodyItems";
 import { ILight } from "@/interfaces/global/controls";
 
@@ -28,15 +28,18 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
   lights,
   img,
   file,
+  magnifier,
   setName,
   setRotation,
   setPosition,
   setScale,
   setLights,
   setImg,
-  magnifier,
   setMagnifier,
 }) => {
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
   return (
     <div className="px-2 w-full max-h-screen overflow-scroll overflow-x-hidden">
       <ToolbarBody.Name name={name} setName={setName} />
@@ -50,7 +53,16 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
         setMagnifier={setMagnifier}
       />
       <ToolbarBody.Image img={img} setImg={setImg} />
-      <ToolbarBody.ModelGallery />
+      <div className="flex justify-between gap-2 mt-5">
+        <ToolbarBody.ModelGallery
+          selectedFiles={selectedFiles}
+          setSelectedFiles={setSelectedFiles}
+        />
+        <ToolbarBody.ModelCategories
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
+        />
+      </div>
       <ToolbarBody.SubmitBtn
         data={{
           title: name,
@@ -60,6 +72,8 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
           position: position,
           rotation: rotation,
           file: file,
+          gallery: selectedFiles,
+          categories: selectedCategories,
         }}
       />
     </div>

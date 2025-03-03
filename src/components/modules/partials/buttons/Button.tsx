@@ -7,6 +7,8 @@ interface IAppBtnProps {
   loading?: boolean;
   fullWidth?: boolean;
   variant?: "filled" | "gradient" | "outlined" | "text";
+  color?: "blue" | "red" | "green" | "yellow" | "purple" | "gray";
+  className?: string;
 }
 
 const AppButton: FC<IAppBtnProps> = ({
@@ -15,12 +17,16 @@ const AppButton: FC<IAppBtnProps> = ({
   fullWidth = false,
   variant = "outlined",
   children,
+  color = "gray",
+  className,
 }) => {
   return (
     <Button
       fullWidth={fullWidth}
       variant={variant}
       loading={loading}
+      color={color}
+      className={className}
       onClick={() => onClick()}
     >
       {children}

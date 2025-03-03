@@ -35,6 +35,7 @@ import type {
   TextareaProps as OriginalTextareaProps,
   TooltipProps as OriginalTooltipProps,
   SwitchProps as OriginalSwitchProps,
+  MenuListProps as OriginalMenuListProps,
 } from "@material-tailwind/react";
 
 declare module "@material-tailwind/react" {
@@ -157,6 +158,7 @@ declare module "@material-tailwind/react" {
     onPointerEnterCapture?: OriginalCheckboxProps["onPointerEnterCapture"];
     onPointerLeaveCapture?: OriginalCheckboxProps["onPointerLeaveCapture"];
     placeholder?: OriginalCheckboxProps["placeholder"];
+    crossOrigin?: OriginalCheckboxProps["crossOrigin"];
   }
 
   export interface ChipProps
@@ -397,5 +399,15 @@ declare module "@material-tailwind/react" {
     onPointerLeaveCapture?: OriginalSwitchProps["onPointerLeaveCapture"];
     placeholder?: OriginalSwitchProps["placeholder"];
     crossOrigin?: OriginalSwitchProps["crossOrigin"];
+  }
+  export interface MenuListProps
+    extends Omit<
+      OriginalMenuListProps,
+      "onPointerEnterCapture" | "onPointerLeaveCapture" | "placeholder"
+    > {
+    onPointerEnterCapture?: OriginalMenuListProps["onPointerEnterCapture"];
+    onPointerLeaveCapture?: OriginalMenuListProps["onPointerLeaveCapture"];
+    placeholder?: OriginalMenuListProps["placeholder"];
+    crossOrigin?: OriginalMenuListProps["crossOrigin"];
   }
 }

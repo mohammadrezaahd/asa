@@ -1,3 +1,3 @@
 import modelSchema from "./model";
-
-export const Models = [modelSchema];
+import categorySchema from "./category";
+export const Models = [modelSchema, categorySchema];

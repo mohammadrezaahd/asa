@@ -18,7 +18,7 @@ const AppTooltip: FC<IAppTooltipProps> = ({
     <Tooltip
       placement={placement}
       content={content}
-      className={className ? className : ""}
+      className={className ? className : "z-50"}
     >
       {children}
     </Tooltip>

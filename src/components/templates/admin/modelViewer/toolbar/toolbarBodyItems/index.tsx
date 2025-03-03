@@ -6,6 +6,7 @@ import Scale from "./scale";
 import Image from "./image";
 import SubmitBtn from "./submitBtn";
 import ModelGallery from "./gallary";
+import ModelCategories from "./categories";
 
 export const ToolbarBody = {
   Rotation,
@@ -16,4 +17,5 @@ export const ToolbarBody = {
   Image,
   SubmitBtn,
   ModelGallery,
+  ModelCategories,
 };

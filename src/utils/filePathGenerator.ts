@@ -8,7 +8,11 @@ const filePathGenerator = async (
   file: FormDataEntryValue | null,
   folder: string
 ) => {
-  const buffer = Buffer.from(await (file as Blob).arrayBuffer());
+  if (!(file instanceof Blob)) {
+    throw new TypeError("Expected file to be a Blob or File");
+  }
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
   const fileName = Date.now() + (file as File).name;
   const dirPath = path.join(
     process.cwd(),

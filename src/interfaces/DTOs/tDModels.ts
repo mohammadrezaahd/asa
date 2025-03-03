@@ -4,15 +4,19 @@ export interface ITDModel {
   position: [number, number, number];
   scale: number;
   lights: ITDModelLight[];
+  categories: string[];
 }
 
 export interface ITDModelCreate extends ITDModel {
   file: File;
   thumbnail: File;
+  gallery: File[];
 }
 export interface ITDModelGet extends ITDModel {
+  _id: number;
   file: string;
   thumbnail: string;
+  gallery: string[];
 }
 
 export interface ITDModelLight {
@@ -20,4 +24,8 @@ export interface ITDModelLight {
   position: [number, number, number];
   isVisible: boolean;
   color: string;
+}
+
+export interface ICategory {
+  name: string;
 }
