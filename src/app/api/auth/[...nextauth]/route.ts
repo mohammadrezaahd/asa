@@ -1,28 +1,63 @@
-import connectToDb from "@/server/database/connection";
-import { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import environments from "@/helpers/configurations";
+import connectToDb from "@/server/database/connection";
+import User from "@/server/models/user";
 
 export const authOptions: NextAuthOptions = {
+  secret: environments.nextAuth.secret,
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: environments.auth.client_id as string,
+      clientSecret: environments.auth.client_secret as string,
     }),
   ],
   callbacks: {
-    async session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
+    async signIn({ user }) {
+      try {
+        await connectToDb();
+        const existingUser = await User.findOne({ email: user.email });
+
+        if (!existingUser) {
+          await User.create({
+            name: user.name,
+            email: user.email,
+            image: user.image,
+          });
+        }
+
+        return true;
+      } catch (error) {
+        console.error("Error in signIn callback:", error);
+        return false;
       }
-      return session;
+    },
+
+    async session({ session, token }) {
+      try {
+        if (session.user && token.sub) {
+          session.user.id = token.sub;
+        }
+
+        const existingUser = await User.findOne({ email: session.user?.email });
+        if (existingUser) {
+          session.user.role = existingUser.role;
+        }
+
+        return session;
+      } catch (error) {
+        console.error("Error in session callback:", error);
+        return session;
+      }
     },
   },
+  debug: true,
 };
 
-const handler = async (req: Request, res: Response) => {
-  await connectToDb();
-  const nextAuth = (await import("next-auth")).default;
-  return nextAuth(authOptions)(req, res);
-};
+console.log("environments.nextAuth.secret", environments.nextAuth.secret);
+console.log("environments.auth.client_secret", environments.auth.client_secret);
+console.log("environments.auth.client_id", environments.auth.client_id);
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

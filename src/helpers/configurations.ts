@@ -14,6 +14,14 @@ const environments = {
     storage_directory: process.env.NEXT_PUBLIC_STORAGE_DIRECTORY,
     storage_folder: process.env.NEXT_PUBLIC_STORAGE_FOLDER,
   },
+  auth: {
+    client_id: process.env.GOOGLE_CLIENT_ID, // حذف NEXT_PUBLIC_
+    client_secret: process.env.GOOGLE_CLIENT_SECRET, // حذف NEXT_PUBLIC_
+  },
+  nextAuth: {
+    secret: process.env.NEXTAUTH_SECRET,
+    url: process.env.NEXTAUTH_URL,
+  },
 };
 
 export default environments;

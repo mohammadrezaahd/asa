@@ -1,7 +1,10 @@
 import environments from "@/helpers/configurations";
+import isProduction from "@/utils/isProduction";
 import mongoose, { Mongoose } from "mongoose";
 
-const MONGODB_URI = `mongodb://${environments.server.db_server}:${environments.server.db_port}/${environments.server.db_name}`;
+const MONGODB_URI = isProduction()
+  ? `mongodb+srv://${environments.server.db_username}:${environments.server.db_pwd}@${environments.server.db_server}.edewq.mongodb.net/${environments.server.db_name}?retryWrites=true&w=majority&appName=${environments.server.db_server}`
+  : `mongodb://${environments.server.db_server}:${environments.server.db_port}/${environments.server.db_name}`;
 
 if (!MONGODB_URI) {
   throw new Error(
