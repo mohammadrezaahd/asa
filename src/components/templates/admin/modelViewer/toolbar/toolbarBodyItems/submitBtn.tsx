@@ -1,5 +1,6 @@
 import { TDModelsApi } from "@/components/api/TDModels.api";
 import AppButton from "@/components/modules/partials/buttons/Button";
+import environments from "@/helpers/configurations";
 import { ITDModelCreate } from "@/interfaces/DTOs/tDModels";
 import { FC, useState } from "react";
 
@@ -11,6 +12,7 @@ const SubmitBtn: FC<ISubmitBtnProps> = ({ data }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const submitModelHandler = async () => {
+    console.log(`mongodb+srv://${environments.server.db_username}:${environments.server.db_pwd}@${environments.server.db_server}.edewq.mongodb.net/${environments.server.db_name}?retryWrites=true&w=majority&appName=${environments.server.db_server}`)
     try {
       setIsLoading(true);
       const res = await TDModelsApi.createNewModel(data);
