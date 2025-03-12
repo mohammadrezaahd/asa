@@ -26,7 +26,7 @@ const connectToDb = async (): Promise<Mongoose> => {
 
   if (!cached.promise) {
     cached.promise = mongoose
-      .connect(MONGODB_URI, {
+      .connect(`mongodb+srv://mohammadrezaahadiyan:hZ5I5LVQV4glFzYb@main.gxao1.mongodb.net/?retryWrites=true&w=majority&appName=main`, {
         dbName: environments.server.db_name,
         bufferCommands: false,
       })
