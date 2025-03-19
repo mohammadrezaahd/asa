@@ -1,3 +1,6 @@
-const lightTypes = ["Ambient", "Directional", "Point", "Spot"];
+import consts from "./const.json";
 
-export const constants = { lightTypes };
+const lightTypes = consts.lights;
+const roles = consts.roles;
+
+export const constants = { lightTypes, roles };

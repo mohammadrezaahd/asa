@@ -1,0 +1,4 @@
+{
+  "lights": ["Ambient", "Directional", "Point", "Spot"],
+  "roles": { "admin": "ADMIN", "user": "USER" }
+}

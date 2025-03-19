@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Model from "./Model";
@@ -8,12 +8,20 @@ import ModelToolbar from "@/components/templates/admin/modelViewer/toolbar";
 import Lights from "./Lights";
 import { ILight } from "@/interfaces/global/controls";
 import { constants } from "../../../../constants";
+import { useSession } from "next-auth/react";
 
 interface ISceneProps {
   fileUrl: string;
   file: File;
 }
 const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
+  const { status } = useSession();
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  useEffect(() => {
+    if (status === "authenticated") {
+      setIsAdmin(true);
+    }
+  }, [status]);
   //Lights
   const [lights, setLights] = useState<ILight[]>(
     constants.lightTypes.map((type, index) => ({
@@ -134,23 +142,25 @@ const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
 
   return (
     <>
-      <ModelToolbar
-        name={generalData.name}
-        rotation={controls.rotation}
-        position={controls.position}
-        scale={controls.scale}
-        lights={lights}
-        img={generalData.img}
-        magnifier={magnifier}
-        file={file}
-        setName={changeName}
-        setRotation={changeRotation}
-        setPosition={changePosition}
-        setScale={changeScale}
-        setLights={setLights}
-        setImg={changeImage}
-        setMagnifier={setMagnifier}
-      />
+      {isAdmin && (
+        <ModelToolbar
+          name={generalData.name}
+          rotation={controls.rotation}
+          position={controls.position}
+          scale={controls.scale}
+          lights={lights}
+          img={generalData.img}
+          magnifier={magnifier}
+          file={file}
+          setName={changeName}
+          setRotation={changeRotation}
+          setPosition={changePosition}
+          setScale={changeScale}
+          setLights={setLights}
+          setImg={changeImage}
+          setMagnifier={setMagnifier}
+        />
+      )}
       <Canvas style={{ height: "100vh" }} shadows>
         <group
           position={controls.position}

@@ -1,4 +1,4 @@
-import { CategoriesApi } from "@/components/api/Categories.api";
+import { CategoriesApi } from "@/components/api/categories.api";
 import AppCheckBox from "@/components/modules/partials/checkBox/CheckBox";
 import AppMenu from "@/components/modules/partials/dropdown/Dropdown";
 import { ICategoryGet } from "@/interfaces/DTOs/categories";
@@ -35,8 +35,8 @@ const ModelCategories: FC<IModelCategoriesProps> = ({
   };
 
   useEffect(() => {
-      console.log(selectedCategories)
-  }, [selectedCategories])
+    console.log(selectedCategories);
+  }, [selectedCategories]);
 
   return (
     <AppMenu
@@ -44,8 +44,10 @@ const ModelCategories: FC<IModelCategoriesProps> = ({
       renderItem={(item) => (
         <AppCheckBox
           label={item.name}
-          checked={selectedCategories.includes((item._id).toString())}
-          onChange={(e) => handleCategoryChange((item._id).toString(), e.target.checked)}
+          checked={selectedCategories.includes(item._id.toString())}
+          onChange={(e) =>
+            handleCategoryChange(item._id.toString(), e.target.checked)
+          }
         />
       )}
       getKey={(item) => item._id}

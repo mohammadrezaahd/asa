@@ -1,4 +1,4 @@
-import { TDModelsApi } from "@/components/api/TDModels.api";
+import { TDModelsApi } from "@/components/api/tDModels.api";
 import AppButton from "@/components/modules/partials/buttons/Button";
 import environments from "@/helpers/configurations";
 import { ITDModelCreate } from "@/interfaces/DTOs/tDModels";

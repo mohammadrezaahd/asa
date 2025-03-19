@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientProvider from "./ClientProvider";
-import localFont from 'next/font/local';
+import localFont from "next/font/local";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "@/store/currentUser";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,6 +28,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { data, status } = useSession();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const getCurrentUser = () => {
+      if (status === "authenticated") {
+        dispatch(setCurrentUser(data.user));
+      }
+    };
+    getCurrentUser();
+  }, [status, data, dispatch]);
   return (
     <html lang="en">
       <body

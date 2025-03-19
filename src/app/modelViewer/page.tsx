@@ -15,7 +15,7 @@ const CreateModel = () => {
 
   return (
     <>
-      {(file && fileUrl && <ModelViewer fileUrl={fileUrl} file={file}/>) || (
+      {(file && fileUrl && <ModelViewer fileUrl={fileUrl} file={file} />) || (
         <Inputs.FileDraggable
           onFileSelect={fileInputHandler}
           fileFormat={[".glb"]}
