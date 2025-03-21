@@ -55,6 +55,12 @@ export const authOptions: NextAuthOptions = {
       // افزودن نقش به توکن در صورت ورود کاربر
       if (user) {
         token.role = user.role;
+      } else {
+        await connectToDb();
+        const dbUser = await userModel.findOne({ email: token.email });
+        if (dbUser) {
+          token.role = dbUser.role;
+        }
       }
       return token;
     },
@@ -62,6 +68,7 @@ export const authOptions: NextAuthOptions = {
       // اضافه کردن role به session
       if (session.user) {
         session.user.role = token.role;
+        // session.user.email = token.email; // اضافه کردن ایمیل به session
       }
       return session;
     },

@@ -25,20 +25,22 @@ export async function POST(req: NextRequest) {
     const categories = JSON.parse(formData.get("categories") as string);
 
     const fileName = await filePathGenerator(file, "tdm");
-    const thumbnailName = await filePathGenerator(thumbnail, "thumbs");
+    const thumbnailName = await filePathGenerator(thumbnail, "images/thumbs");
     const galleryNames = await Promise.all(
-      gallery.map((item) => filePathGenerator(item, "gallery"))
+      gallery.map((item) => filePathGenerator(item, "images/gallery"))
     );
 
     const model = await modelsModel.create({
       title,
-      file: `${STORAGE_FOLDER}/3dModels/${fileName}`,
+      file: `${STORAGE_FOLDER}/tdm/${fileName}`,
       position,
       rotation,
       scale,
-      thumbnail: `${STORAGE_FOLDER}/images/${thumbnailName}`,
+      thumbnail: `${STORAGE_FOLDER}/images/thumbs/${thumbnailName}`,
       lights,
-      gallery: galleryNames.map((name) => `${STORAGE_FOLDER}/gallery/${name}`),
+      gallery: galleryNames.map(
+        (name) => `${STORAGE_FOLDER}/images/gallery/${name}`
+      ),
       categories,
     });
 
@@ -52,6 +54,26 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { message: "Model posted successfully", data: model },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    await connectToDb();
+    const modelsModel = getTable("Model");
+
+    const models = await modelsModel.find({});
+
+    return NextResponse.json(
+      { message: "Models retrieved successfully", data: models },
       { status: 200 }
     );
   } catch (err) {

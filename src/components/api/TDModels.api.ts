@@ -1,5 +1,6 @@
 import environments from "@/helpers/configurations";
-import { ITDModelCreate } from "@/interfaces/DTOs/tDModels";
+import { ITDModelCreate, ITDModelGet } from "@/interfaces/DTOs/tDModels";
+import { IApiResponse } from "@/interfaces/global/apiResponse";
 import axios from "axios";
 
 const API_URL = environments.uri.api_url;
@@ -37,7 +38,6 @@ const createNewModel = async (data: ITDModelCreate) => {
     });
 
     if (response.status === 200) {
-      console.log(response.data.message);
       return response.data;
     } else {
       console.error(response.data.error);
@@ -48,4 +48,23 @@ const createNewModel = async (data: ITDModelCreate) => {
   }
 };
 
-export const TDModelsApi = { createNewModel };
+const getModels = async (): Promise<IApiResponse<ITDModelGet[]>> => {
+  try {
+    const response = await axios.get(`${API_URL}/tdm`, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      console.error(response.data.error);
+      throw new Error("Model creation failed");
+    }
+  } catch (err) {
+    console.error("Error creating table", err);
+    throw err;
+  }
+};
+export const TDModelsApi = { createNewModel, getModels };

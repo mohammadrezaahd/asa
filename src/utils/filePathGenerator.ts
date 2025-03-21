@@ -34,7 +34,7 @@ const filePathGenerator = async (
   await mkdir(dirPath, { recursive: true });
   await writeFile(filePath, buffer);
 
-  return filePath;
+  return fileName; // فقط نام فایل را برمی‌گردانیم
 };
 
 export default filePathGenerator;

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Model from "./Model";
@@ -8,20 +8,17 @@ import ModelToolbar from "@/components/templates/admin/modelViewer/toolbar";
 import Lights from "./Lights";
 import { ILight } from "@/interfaces/global/controls";
 import { constants } from "../../../../constants";
-import { useSession } from "next-auth/react";
+import useCurrentUser from "@/hooks/currentUserContext";
+import useIsAdmin from "@/hooks/isAdminContext";
 
 interface ISceneProps {
   fileUrl: string;
   file: File;
 }
 const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
-  const { status } = useSession();
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  useEffect(() => {
-    if (status === "authenticated") {
-      setIsAdmin(true);
-    }
-  }, [status]);
+  const currentUser = useCurrentUser();
+  const isAdmin = useIsAdmin(currentUser.role);
+
   //Lights
   const [lights, setLights] = useState<ILight[]>(
     constants.lightTypes.map((type, index) => ({
