@@ -3,9 +3,9 @@ export interface ILight {
   color: string;
   isVisible: boolean;
   position: [number, number, number];
-  setColor: (color: string) => void;
-  setIsVisible: (isVisible: boolean) => void;
-  setPosition: (x: number, y: number, z: number) => void;
+  setColor?: (color: string) => void;
+  setIsVisible?: (isVisible: boolean) => void;
+  setPosition?: (x: number, y: number, z: number) => void;
 }
 
 export interface IOrbits {

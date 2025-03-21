@@ -1,5 +1,9 @@
 import environments from "@/helpers/configurations";
-import { ITDModelCreate, ITDModelGet } from "@/interfaces/DTOs/tDModels";
+import {
+  ITDModelBase,
+  ITDModelCreate,
+  ITDModelGet,
+} from "@/interfaces/DTOs/tDModels";
 import { IApiResponse } from "@/interfaces/global/apiResponse";
 import axios from "axios";
 
@@ -48,11 +52,15 @@ const createNewModel = async (data: ITDModelCreate) => {
   }
 };
 
-const getModels = async (): Promise<IApiResponse<ITDModelGet[]>> => {
+const getModelById = async (
+  id: string,
+  detailed = false
+): Promise<IApiResponse<ITDModelGet>> => {
   try {
-    const response = await axios.get(`${API_URL}/tdm`, {
+    const response = await axios.get(`${API_URL}/tdm/${id}`, {
+      params: { detailed },
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
       },
     });
 
@@ -60,11 +68,32 @@ const getModels = async (): Promise<IApiResponse<ITDModelGet[]>> => {
       return response.data;
     } else {
       console.error(response.data.error);
-      throw new Error("Model creation failed");
+      throw new Error("Model retrieval failed");
     }
   } catch (err) {
-    console.error("Error creating table", err);
+    console.error("Error retrieving model", err);
     throw err;
   }
 };
-export const TDModelsApi = { createNewModel, getModels };
+
+const getModels = async (): Promise<IApiResponse<ITDModelBase[]>> => {
+  try {
+    const response = await axios.get(`${API_URL}/tdm`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      console.error(response.data.error);
+      throw new Error("Model retrieval failed");
+    }
+  } catch (err) {
+    console.error("Error retrieving models", err);
+    throw err;
+  }
+};
+
+export const TDModelsApi = { createNewModel, getModels, getModelById };

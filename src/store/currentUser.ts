@@ -5,12 +5,14 @@ interface ICurrentUser {
   name: string;
   email: string;
   role: TRole;
+  image: string;
 }
 
 const initialState: ICurrentUser = {
   name: "",
   email: "",
   role: "USER",
+  image: "",
 };
 
 const CurrentUserSlice = createSlice({
@@ -21,6 +23,7 @@ const CurrentUserSlice = createSlice({
       state.email = action.payload.email;
       state.name = action.payload.name;
       state.role = action.payload.role;
+      state.image = action.payload.image;
     },
   },
 });

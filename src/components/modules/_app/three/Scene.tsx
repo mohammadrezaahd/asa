@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Model from "./Model";
@@ -8,18 +8,16 @@ import ModelToolbar from "@/components/templates/admin/modelViewer/toolbar";
 import Lights from "./Lights";
 import { ILight } from "@/interfaces/global/controls";
 import { constants } from "../../../../constants";
-import useCurrentUser from "@/hooks/currentUserContext";
-import useIsAdmin from "@/hooks/isAdminContext";
+import { TDModelsApi } from "@/components/api/TDModels.api";
 
 interface ISceneProps {
   fileUrl: string;
-  file: File;
+  file?: File;
+  isAdmin: boolean;
 }
-const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
-  const currentUser = useCurrentUser();
-  const isAdmin = useIsAdmin(currentUser.role);
 
-  //Lights
+const Scene: FC<ISceneProps> = ({ fileUrl, file, isAdmin }) => {
+  // Lights
   const [lights, setLights] = useState<ILight[]>(
     constants.lightTypes.map((type, index) => ({
       type,
@@ -66,14 +64,14 @@ const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
     }))
   );
 
-  //Orbit controls
+  // Orbit controls
   const [controls, setControls] = useState({
     rotation: [-Math.PI / 2, 0, Math.PI] as [number, number, number],
     position: [0, 0, 0] as [number, number, number],
     scale: 30,
   });
 
-  //General data
+  // General data
   const [generalData, setGeneralData] = useState({
     name: "",
     img: { fileUrl: "", file: new File([], "") },
@@ -83,6 +81,29 @@ const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
     isActive: false,
     value: 15,
   });
+
+  const [viewUrl, setViewUrl] = useState<string>("");
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await TDModelsApi.getModelById(fileUrl, true);
+      const data = res.data;
+      setLights(data.lights);
+      setControls({
+        position: data.position,
+        rotation: data.rotation,
+        scale: data.scale,
+      });
+      setGeneralData({
+        name: data.title,
+        img: { fileUrl: data.thumbnail, file: new File([], "") },
+      });
+      setViewUrl(`/${data.file}`);
+    };
+    if (!file) {
+      getData();
+    }
+  }, [fileUrl, file]);
 
   const controlChangeHandler = (
     newRotation: Euler,
@@ -139,7 +160,7 @@ const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
 
   return (
     <>
-      {isAdmin && (
+      {isAdmin && file && (
         <ModelToolbar
           name={generalData.name}
           rotation={controls.rotation}
@@ -158,24 +179,27 @@ const Scene: FC<ISceneProps> = ({ fileUrl, file }) => {
           setMagnifier={setMagnifier}
         />
       )}
-      <Canvas style={{ height: "100vh" }} shadows>
-        <group
-          position={controls.position}
-          rotation={controls.rotation}
-          scale={magnifier.isActive ? magnifier.value : 5}
-        >
-          <Model fileUrl={fileUrl} />
-        </group>
-        <Lights lights={lights} key={JSON.stringify(lights)} />
+      {file ||
+        (viewUrl && (
+          <Canvas style={{ height: "100vh" }} shadows>
+            <group
+              position={controls.position}
+              rotation={controls.rotation}
+              scale={magnifier.isActive ? magnifier.value : 5}
+            >
+              <Model fileUrl={file ? fileUrl : viewUrl} />
+            </group>
+            <Lights lights={lights} key={JSON.stringify(lights)} />
 
-        <CustomControls
-          onChange={controlChangeHandler}
-          rotation={controls.rotation}
-          position={controls.position}
-          scale={controls.scale}
-        />
-        <PerspectiveCamera makeDefault position={[0, 0, controls.scale]} />
-      </Canvas>
+            <CustomControls
+              onChange={controlChangeHandler}
+              rotation={controls.rotation}
+              position={controls.position}
+              scale={controls.scale}
+            />
+            <PerspectiveCamera makeDefault position={[0, 0, controls.scale]} />
+          </Canvas>
+        ))}
     </>
   );
 };

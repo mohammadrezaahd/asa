@@ -36,6 +36,7 @@ import type {
   TooltipProps as OriginalTooltipProps,
   SwitchProps as OriginalSwitchProps,
   MenuListProps as OriginalMenuListProps,
+  AvatarProps as OriginalAvatarProps,
 } from "@material-tailwind/react";
 
 declare module "@material-tailwind/react" {
@@ -409,5 +410,15 @@ declare module "@material-tailwind/react" {
     onPointerLeaveCapture?: OriginalMenuListProps["onPointerLeaveCapture"];
     placeholder?: OriginalMenuListProps["placeholder"];
     crossOrigin?: OriginalMenuListProps["crossOrigin"];
+  }
+  export interface AvatarProps
+    extends Omit<
+      OriginalAvatarProps,
+      "onPointerEnterCapture" | "onPointerLeaveCapture" | "placeholder"
+    > {
+    onPointerEnterCapture?: OriginalAvatarProps["onPointerEnterCapture"];
+    onPointerLeaveCapture?: OriginalAvatarProps["onPointerLeaveCapture"];
+    placeholder?: OriginalAvatarProps["placeholder"];
+    crossOrigin?: OriginalAvatarProps["crossOrigin"];
   }
 }

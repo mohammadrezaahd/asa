@@ -6,10 +6,11 @@ import usePageLoaded from "@/hooks/pageLoadedContext";
 
 interface IModelViewerProps {
   fileUrl: string;
-  file: File;
+  file?: File;
+  isAdmin: boolean;
 }
 
-const ModelViewer: FC<IModelViewerProps> = ({ fileUrl, file }) => {
+const ModelViewer: FC<IModelViewerProps> = ({ fileUrl, file, isAdmin }) => {
   const isPageLoaded = usePageLoaded();
 
   return (
@@ -19,7 +20,7 @@ const ModelViewer: FC<IModelViewerProps> = ({ fileUrl, file }) => {
           <Loading />
         ) : (
           <Suspense fallback={null}>
-            <Scene fileUrl={fileUrl} file={file} />
+            <Scene fileUrl={fileUrl} file={file} isAdmin={isAdmin} />
           </Suspense>
         )}
       </ErrorBoundary>

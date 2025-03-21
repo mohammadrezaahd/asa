@@ -1,11 +1,11 @@
 "use client";
 import { TDModelsApi } from "@/components/api/tDModels.api";
 import { Cards } from "@/components/modules/partials/cards";
-import { ITDModelGet } from "@/interfaces/DTOs/tDModels";
+import { ITDModelBase } from "@/interfaces/DTOs/tDModels";
 import { FC, useEffect, useState } from "react";
 
 const Archive: FC = () => {
-  const [data, setData] = useState<ITDModelGet[]>([]);
+  const [data, setData] = useState<ITDModelBase[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +21,7 @@ const Archive: FC = () => {
         <div key={item._id}>
           <Cards.Card1
             imageUrl={`/${item.thumbnail}`}
-            link="/"
+            link={`/tdm/${item._id}`}
             title={item.title}
           />
         </div>

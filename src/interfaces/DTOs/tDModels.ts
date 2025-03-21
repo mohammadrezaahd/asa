@@ -1,22 +1,7 @@
-export interface ITDModel {
+export interface ITDModelBase {
+  _id: string;
   title: string;
-  rotation: [number, number, number];
-  position: [number, number, number];
-  scale: number;
-  lights: ITDModelLight[];
-  categories: string[];
-}
-
-export interface ITDModelCreate extends ITDModel {
-  file: File;
-  thumbnail: File;
-  gallery: File[];
-}
-export interface ITDModelGet extends ITDModel {
-  _id: number;
-  file: string;
   thumbnail: string;
-  gallery: string[];
 }
 
 export interface ITDModelLight {
@@ -26,6 +11,24 @@ export interface ITDModelLight {
   color: string;
 }
 
-export interface ICategory {
-  name: string;
+export interface ITDModelConfigs {
+  rotation: [number, number, number];
+  position: [number, number, number];
+  scale: number;
+  lights: ITDModelLight[];
+}
+
+export interface ITDModel extends ITDModelBase, ITDModelConfigs {
+  categories: string[];
+}
+
+export interface ITDModelCreate extends ITDModel {
+  file: File;
+  thumbnailFile: File;
+  gallery: File[];
+}
+
+export interface ITDModelGet extends ITDModel {
+  file: string;
+  gallery: string[];
 }

@@ -70,7 +70,7 @@ export async function GET() {
     await connectToDb();
     const modelsModel = getTable("Model");
 
-    const models = await modelsModel.find({});
+    const models = await modelsModel.find({}, "_id title thumbnail");
 
     return NextResponse.json(
       { message: "Models retrieved successfully", data: models },

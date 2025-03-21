@@ -35,14 +35,17 @@ export const authOptions: NextAuthOptions = {
             email: credentials.email,
             password: credentials.password,
             role: constants.roles.user,
+            image: "",
           });
         }
 
         return {
+          // Return data
           id: user._id.toString(),
           name: user.name,
           email: user.email,
-          role: user.role, // برگرداندن role به همراه کاربر
+          role: user.role,
+          image: user.image,
         };
       },
     }),
@@ -52,7 +55,7 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      // افزودن نقش به توکن در صورت ورود کاربر
+      // Add additional data in login proccess
       if (user) {
         token.role = user.role;
       } else {
@@ -60,15 +63,16 @@ export const authOptions: NextAuthOptions = {
         const dbUser = await userModel.findOne({ email: token.email });
         if (dbUser) {
           token.role = dbUser.role;
+          token.image = dbUser.image;
         }
       }
       return token;
     },
     async session({ session, token }) {
-      // اضافه کردن role به session
+      // Add additional data to session
       if (session.user) {
         session.user.role = token.role;
-        // session.user.email = token.email; // اضافه کردن ایمیل به session
+        session.user.image = token.image;
       }
       return session;
     },
@@ -85,7 +89,7 @@ export const authOptions: NextAuthOptions = {
         });
       }
 
-      return true; // اجازه ورود
+      return true; //Login access
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
