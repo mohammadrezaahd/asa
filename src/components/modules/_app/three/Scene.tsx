@@ -179,27 +179,26 @@ const Scene: FC<ISceneProps> = ({ fileUrl, file, isAdmin }) => {
           setMagnifier={setMagnifier}
         />
       )}
-      {file ||
-        (viewUrl && (
-          <Canvas style={{ height: "100vh" }} shadows>
-            <group
-              position={controls.position}
-              rotation={controls.rotation}
-              scale={magnifier.isActive ? magnifier.value : 5}
-            >
-              <Model fileUrl={file ? fileUrl : viewUrl} />
-            </group>
-            <Lights lights={lights} key={JSON.stringify(lights)} />
+      {(file || viewUrl) && (
+        <Canvas style={{ height: "100vh" }} shadows>
+          <group
+            position={controls.position}
+            rotation={controls.rotation}
+            scale={magnifier.isActive ? magnifier.value : 5}
+          >
+            <Model fileUrl={file ? fileUrl : viewUrl} />
+          </group>
+          <Lights lights={lights} key={JSON.stringify(lights)} />
 
-            <CustomControls
-              onChange={controlChangeHandler}
-              rotation={controls.rotation}
-              position={controls.position}
-              scale={controls.scale}
-            />
-            <PerspectiveCamera makeDefault position={[0, 0, controls.scale]} />
-          </Canvas>
-        ))}
+          <CustomControls
+            onChange={controlChangeHandler}
+            rotation={controls.rotation}
+            position={controls.position}
+            scale={controls.scale}
+          />
+          <PerspectiveCamera makeDefault position={[0, 0, controls.scale]} />
+        </Canvas>
+      )}
     </>
   );
 };

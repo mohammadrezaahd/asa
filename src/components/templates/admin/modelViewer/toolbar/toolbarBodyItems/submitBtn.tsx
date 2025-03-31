@@ -1,4 +1,4 @@
-import { TDModelsApi } from "@/components/api/tDModels.api";
+import { TDModelsApi } from "@/components/api/TDModels.api";
 import AppButton from "@/components/modules/partials/buttons/Button";
 import { ITDModelCreate } from "@/interfaces/DTOs/tDModels";
 import { FC, useState } from "react";

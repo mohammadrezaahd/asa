@@ -66,7 +66,7 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
       <ToolbarBody.SubmitBtn
         data={{
           title: name,
-          thumbnail: img.file as File,
+          thumbnail: img.file as string,
           scale: scale,
           lights: lights,
           position: position,
@@ -74,6 +74,8 @@ const ModelToolbarBody: FC<IModelToolbarBodyProps> = ({
           file: file,
           gallery: selectedFiles,
           categories: selectedCategories,
+          thumbnailFile: img.file as File,
+          _id: "",
         }}
       />
     </div>

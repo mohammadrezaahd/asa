@@ -1,5 +1,5 @@
 "use client";
-import { TDModelsApi } from "@/components/api/tDModels.api";
+import { TDModelsApi } from "@/components/api/TDModels.api";
 import { Cards } from "@/components/modules/partials/cards";
 import { ITDModelBase } from "@/interfaces/DTOs/tDModels";
 import { FC, useEffect, useState } from "react";
