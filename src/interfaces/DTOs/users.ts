@@ -2,8 +2,13 @@ import { TRole } from "../global/roles";
 
 export interface IUser {
   email: string;
-  image: string;
-  name: string;
+  password?: string;
+  isOAuth: boolean;
+  image?: string;
+  role: "USER" | "ADMIN";
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: number;
 }
 
 export interface IUserGet extends IUser {

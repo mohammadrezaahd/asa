@@ -20,7 +20,7 @@
     "**/node_modules": true,
     "**/.cache": true
   },
-  "explorer.excludeGitIgnore": true,
+  "explorer.excludeGitIgnore": false,
   "workbench.startupEditor": "none",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "terminal.integrated.defaultProfile.windows": "PowerShell",

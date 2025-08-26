@@ -1,21 +1,20 @@
 "use client";
 
-import { UsersApi } from "@/components/api/users.api";
-import { useEffect } from "react";
-import { useSession } from "next-auth/react";
+import RegisterForm from "@/components/templates/forms/register";
+import { useState } from "react";
+
+import LoginForm from "@/components/templates/forms/login";
+import { Button } from "@material-tailwind/react";
 
 export default function Home() {
-  const { data: session, status } = useSession();
+  const [toggle, setToggle] = useState(false);
 
-  useEffect(() => {
-    const get = async () => {
-      const res = await UsersApi.getUsers();
-      console.log(res.data);
-      console.log(status);
-      console.log(session);
-    };
-    get();
-  }, [status, session]);
-
-  return <></>;
+  return (
+    <>
+      <Button onClick={() => setToggle(!toggle)}>
+        {toggle ? "Switch to Login" : "Switch to Register"}
+      </Button>
+      {toggle ? <RegisterForm /> : <LoginForm />}
+    </>
+  );
 }

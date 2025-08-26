@@ -1,8 +1,7 @@
-import { RootState } from "@/store";
-import { useSelector } from "react-redux";
+import { RootState, useAppSelector } from "@/store";
 
 const useCurrentUser = () => {
-  return useSelector((state: RootState) => state.CurrentUser);
+  return useAppSelector((state: RootState) => state.CurrentUser);
 };
 
 export default useCurrentUser;

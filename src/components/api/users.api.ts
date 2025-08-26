@@ -6,7 +6,6 @@ import axios from "axios";
 const API_URL = environments.uri.api_url;
 
 const getUsers = async (): Promise<IApiResponse<IUserGet[]>> => {
-  console.log(API_URL);
   try {
     const response = await axios.get(`${API_URL}/user`, {
       headers: {

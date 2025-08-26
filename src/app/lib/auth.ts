@@ -14,6 +14,7 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: environments.auth.client_id as string,
       clientSecret: environments.auth.client_secret as string,
+      httpOptions: { timeout: 100000 },
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -23,16 +24,8 @@ export const authOptions: NextAuthOptions = {
         confirmPassword: { label: "Confirm Password", type: "password" },
       },
       async authorize(credentials) {
-        if (
-          !credentials?.email ||
-          !credentials?.password ||
-          !credentials?.confirmPassword
-        ) {
-          throw new Error("All fields are required");
-        }
-
-        if (credentials.password !== credentials.confirmPassword) {
-          throw new Error("Passwords do not match");
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Email and password are required");
         }
 
         await connectToDb();
@@ -40,8 +33,34 @@ export const authOptions: NextAuthOptions = {
         const existingUser = await userModel.findOne({
           email: credentials.email,
         });
+
+        // اگر کاربر پیدا شد → لاگین
         if (existingUser) {
-          throw new Error("Email is already registered");
+          const isPasswordValid = await bcrypt.compare(
+            credentials.password,
+            existingUser.password
+          );
+          if (!isPasswordValid) {
+            throw new Error("Incorrect password");
+          }
+
+          return {
+            id: existingUser._id.toString(),
+            name: existingUser.name,
+            email: existingUser.email,
+            role: existingUser.role,
+            image: existingUser.image,
+            isOAuth: false,
+          };
+        }
+
+        // اگر کاربر وجود نداشت → ثبت‌نام
+        if (!credentials.confirmPassword) {
+          throw new Error("Email not found");
+        }
+
+        if (credentials.password !== credentials.confirmPassword) {
+          throw new Error("Passwords do not match");
         }
 
         const hashedPassword = await bcrypt.hash(credentials.password, 10);
@@ -52,6 +71,7 @@ export const authOptions: NextAuthOptions = {
           password: hashedPassword,
           role: constants.roles.user,
           image: "",
+          isOAuth: false,
         });
 
         return {
@@ -60,46 +80,51 @@ export const authOptions: NextAuthOptions = {
           email: newUser.email,
           role: newUser.role,
           image: newUser.image,
+          isOAuth: false,
         };
       },
     }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: "jwt", // استفاده از JWT برای ذخیره اطلاعات سشن
   },
   callbacks: {
+    // زمانی که توکن JWT ساخته می‌شود
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role;
-      } else {
-        await connectToDb();
-        const dbUser = await userModel.findOne({ email: token.email });
-        if (dbUser) {
-          token.role = dbUser.role;
-          token.image = dbUser.image;
-        }
+        token.role = user.role; // نقش کاربر را ذخیره می‌کنیم
+        token.image = user.image || ""; // تصویر کاربر را ذخیره می‌کنیم
       }
       return token;
     },
+    // زمانی که سشن ساخته می‌شود
     async session({ session, token }) {
       if (session.user) {
-        session.user.role = token.role;
-        session.user.image = token.image;
+        session.user.role = token.role; // نقش کاربر را به سشن می‌افزاییم
+        session.user.image = token.image; // تصویر کاربر را به سشن می‌افزاییم
       }
       return session;
     },
-    async signIn({ user }) {
+    // زمانی که کاربر وارد می‌شود (لاگین با گوگل یا credentials)
+    async signIn({ user, account }) {
       await connectToDb();
       const existingUser = await userModel.findOne({ email: user.email });
+      const isOAuthUser = account?.provider !== "credentials";
+
       if (!existingUser) {
+        // اگر کاربر با ایمیل وارد شده پیدا نشد، کاربر جدید را می‌سازیم
         await userModel.create({
           name: user.name,
           email: user.email,
-          image: user.image,
+          image: user.image || "",
           role: constants.roles.user,
+          isOAuth: isOAuthUser,
+          password: isOAuthUser
+            ? undefined
+            : crypto.getRandomValues(new Uint8Array(16)).toString(),
         });
       }
-      return true;
+      return true; // اگر همه چیز درست بود، اجازه ورود را می‌دهیم
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
