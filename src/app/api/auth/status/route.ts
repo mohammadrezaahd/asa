@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/auth";
+import { authOptions } from "@/helpers/auth";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
