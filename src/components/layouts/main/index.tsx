@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { MainHeader } from "./header";
+import MainHeader from "./header";
 
 interface IMainLayout {
   children: ReactNode;
