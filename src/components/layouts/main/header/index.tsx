@@ -17,7 +17,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import NavItems from "./navItems";
 
-export function MainHeader() {
+const MainHeader = () => {
   const [fixedNavbar, setFixedNavbar] = useState(false);
 
   useEffect(() => {
@@ -169,6 +169,5 @@ export function MainHeader() {
       </Navbar>
     </div>
   );
-}
-
+};
 export default MainHeader;
