@@ -4,7 +4,7 @@ import Data from "@/data/sections/cores.json";
 import Link from "next/link";
 
 import { useEffect } from "react";
-import { Accordion } from "../common/utilitis";
+import { Accordion } from "@/common/utilitis";
 
 const CoresSection = () => {
   useEffect(() => {

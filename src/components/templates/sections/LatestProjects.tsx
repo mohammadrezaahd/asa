@@ -1,7 +1,7 @@
 import Data from "@/data/sections/latest-projects.json";
 import Link from "next/link";
 import Image from "next/image";
-import { ProjectData } from "../lib/projects";
+import { ProjectData } from "@/utils/projects";
 
 export interface LatestProjectsSectionProps {
   projects: ProjectData[];

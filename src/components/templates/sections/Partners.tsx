@@ -1,6 +1,6 @@
 "use client";
 
-import { SliderProps } from "../common/sliderProps";
+import { SliderProps } from "@/common/sliderProps";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 

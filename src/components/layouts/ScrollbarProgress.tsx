@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { ScrollAnimation } from "../common/scrollAnims";
+import { ScrollAnimation } from "@/common/scrollAnims";
 
 const ScrollbarProgressModule = () => {
   useEffect(() => {

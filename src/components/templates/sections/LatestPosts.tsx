@@ -1,8 +1,8 @@
 import Data from "@/data/sections/latest-posts.json";
-import Date from "../lib/date";
+import Date from "@/utils/date";
 import Link from "next/link";
 import Image from "next/image";
-import { PostData } from "../lib/posts";
+import { PostData } from "@/utils/posts";
 
 interface LatestPostsSectionProps {
   posts: PostData[];

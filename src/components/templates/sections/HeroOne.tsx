@@ -4,7 +4,7 @@ import Data from "@/data/sections/hero-1.json";
 import Link from "next/link";
 
 import { useEffect } from "react";
-import { ScrollAnimation } from "../common/scrollAnims";
+import { ScrollAnimation } from "@/common/scrollAnims";
 
 const HeroOne = () => {
   useEffect(() => {
