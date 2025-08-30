@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import MainHeader from "./header";
+// import MainHeader from "./header";
 
 interface IMainLayout {
   children: ReactNode;
@@ -8,9 +8,9 @@ interface IMainLayout {
 const MainLayout: FC<IMainLayout> = ({ children }) => {
   return (
     <>
-      <MainHeader />
+      {/* <MainHeader /> */}
       {children}
-      <div>FOOTER</div>
+      {/* <div>FOOTER</div> */}
     </>
   );
 };
