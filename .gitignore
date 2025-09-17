@@ -39,3 +39,6 @@ next-env.d.ts
 
 # local files
 /public/uploads
+/public/img
+
+/src/data
