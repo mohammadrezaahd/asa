@@ -3,6 +3,7 @@
 import Isotope from "isotope-layout";
 import { useEffect, useRef, useState, MouseEvent } from "react";
 import Link from "next/link";
+import { ITDModelBase } from "@/interfaces/DTOs/tDModels";
 
 // Types for props
 type Category = {
@@ -10,17 +11,8 @@ type Category = {
   slug: string;
 };
 
-type Project = {
-  id: string | number;
-  title: string;
-  image: string;
-  category: string;
-  category_slug: string;
-  orientation: "vertical" | "horizontal" | string;
-};
-
 type ProjectsMasonryProps = {
-  projects: Project[];
+  projects: ITDModelBase[];
   categories: Category[];
 };
 
@@ -99,35 +91,38 @@ const ProjectsMasonry = ({ projects, categories }: ProjectsMasonryProps) => {
           <div className="mil-portfolio-grid mil-up">
             <div className="grid-sizer" />
 
-            {projects.map((item, key) => (
-              <div
-                className={`mil-grid-item ${item.category_slug}`}
-                key={`projects-item-${key}`}
-              >
-                <Link
-                  href={`/projects/${item.id}`}
-                  className={
-                    item.orientation === "vertical"
-                      ? "mil-portfolio-item-2 mil-long-item mil-mb-30"
-                      : "mil-portfolio-item-2 mil-square-item mil-mb-30"
-                  }
-                >
-                  <img src={item.image} alt={item.title} />
+            {projects.map((item, key) => {
+              // بر اساس ایندکس ارتفاع متفاوت بده
+              const sizeClass = key % 2 === 0 ? "mil-tall" : "mil-short";
 
-                  <div className="mil-project-descr">
-                    <h3 className="mil-upper mil-mb-30">{item.title}</h3>
-                    <div className="mil-link mil-upper">
-                      Start A Project{" "}
-                      <div className="mil-arrow mil-light">
-                        <img src="/img/icons/1.svg" alt="arrow" />
+              return (
+                <div
+                  className={`mil-grid-item ${item._id}`}
+                  key={`projects-item-${key}`}
+                >
+                  <Link
+                    href={`/projects/${item._id}`}
+                    className={`mil-portfolio-item-2 ${sizeClass} mil-mb-30`}
+                  >
+                    <img src={item.thumbnail} alt={item.title} />
+
+                    <div className="mil-project-descr">
+                      <h3 className="mil-upper mil-mb-30">{item.title}</h3>
+                      <div className="mil-link mil-upper">
+                        Start A Project{" "}
+                        <div className="mil-arrow mil-light">
+                          <img src="/img/icons/1.svg" alt="arrow" />
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="mil-category">{item.category}</div>
-                </Link>
-              </div>
-            ))}
+                    <div className="mil-category">
+                      {item.title ?? "UNTITLED"}
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

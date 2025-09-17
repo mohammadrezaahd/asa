@@ -17,3 +17,21 @@ img.mfp-img {
 .mil-wrapper .swiper-container {
   overflow: visible;
 }
+/* asdasd */
+
+/* ارتفاع کارت‌ها متفاوت */
+.mil-portfolio-item-2.mil-tall {
+  height: 420px;
+}
+.mil-portfolio-item-2.mil-short {
+  height: 260px;
+}
+
+/* عکس همیشه کل container رو پر کنه */
+.mil-portfolio-item-2 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}

@@ -1,8 +1,10 @@
-import React, { Suspense } from "react";
+"use client";
+import React, { Suspense, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import AppData from "@/data/app.json";
 import PageBanner from "@/components/templates/sections/PageBanner";
-import { getSortedProjectsData } from "@/utils/projects";
+import { TDModelsApi } from "@/components/api/TDModels.api";
+import { ITDModelBase } from "@/interfaces/DTOs/tDModels";
 
 // Types for props (should match ProjectsMasonry)
 
@@ -11,17 +13,8 @@ type Category = {
   slug: string;
 };
 
-type Project = {
-  id: string | number;
-  title: string;
-  image: string;
-  category: string;
-  category_slug: string;
-  orientation: "vertical" | "horizontal" | string;
-};
-
 type ProjectsMasonryProps = {
-  projects: Project[];
+  projects: ITDModelBase[];
   categories: Category[];
 };
 
@@ -30,15 +23,50 @@ const ProjectsMasonry = dynamic<ProjectsMasonryProps>(
   { ssr: false }
 );
 
-export const metadata = {
-  title: {
-    default: "Projects",
-  },
-  description: AppData.settings.siteDescription,
-};
+function Projects() {
+  const [projects, setProjects] = useState<ITDModelBase[]>([]);
+  const [loading, setLoading] = useState(true);
 
-async function Projects() {
-  const projects = await getAllProjects();
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await TDModelsApi.getModels();
+        // Transform API data to match the expected Project type
+        if (res.data) {
+          setProjects(res.data);
+        }
+        console.log("Fetched projects:", res);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <>
+        <PageBanner
+          pageTitle={"Projects"}
+          breadTitle={"Projects"}
+          bgImage={"/img/photo/12.jpg"}
+        />
+        <section>
+          <div className="container mil-p-120-120">
+            <div className="mil-background-grid mil-softened" />
+            <div className="mil-center">
+              <p className="mil-text-lg mil-up mil-mb-90">
+                Loading projects...
+              </p>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>
@@ -73,8 +101,3 @@ async function Projects() {
   );
 }
 export default Projects;
-
-async function getAllProjects(): Promise<Project[]> {
-  const allProjects = getSortedProjectsData() as Project[];
-  return allProjects;
-}
