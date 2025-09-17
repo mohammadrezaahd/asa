@@ -1,18 +1,38 @@
-import { FC, ReactNode } from "react";
-import { MainHeader } from "./header";
+import "/public/styles/css/plugins/bootstrap-grid.css";
+import "/public/styles/css/plugins/magnific-popup.css";
+import "/public/styles/css/plugins/swiper.min.css";
+import "/public/styles/css/plugins/global.css";
+import "/public/styles/scss/style.scss";
 
-interface IMainLayout {
-  children: ReactNode;
-}
+import { register } from "swiper/element";
+// register Swiper custom elements
+register();
 
-const MainLayout: FC<IMainLayout> = ({ children }) => {
+import AppData from "@/data/app.json";
+import { ReactNode } from "react";
+import ScrollbarProgressModule from "../ScrollbarProgress";
+import DefaultHeader from "./header";
+import DefaultFooter from "./footer";
+
+export const metadata = {
+  title: {
+    default: AppData.settings.siteName,
+    template: "%s | " + AppData.settings.siteName,
+  },
+  description: AppData.settings.siteDescription,
+};
+
+const RuizArchLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
-      <MainHeader />
-      {children}
-      <div>FOOTER</div>
+      <DefaultHeader />
+      <div className="mil-wrapper">
+        {children}
+        <DefaultFooter />
+        <ScrollbarProgressModule />
+      </div>
     </>
   );
 };
 
-export default MainLayout;
+export default RuizArchLayout;

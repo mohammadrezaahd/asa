@@ -37,6 +37,7 @@ import type {
   SwitchProps as OriginalSwitchProps,
   MenuListProps as OriginalMenuListProps,
   AvatarProps as OriginalAvatarProps,
+  BreadcrumbsProps as OriginalBreadcrumbsProps,
 } from "@material-tailwind/react";
 
 declare module "@material-tailwind/react" {
@@ -420,5 +421,14 @@ declare module "@material-tailwind/react" {
     onPointerLeaveCapture?: OriginalAvatarProps["onPointerLeaveCapture"];
     placeholder?: OriginalAvatarProps["placeholder"];
     crossOrigin?: OriginalAvatarProps["crossOrigin"];
+  }
+  export interface BreadcrumbsProps
+    extends Omit<
+      OriginalBreadcrumbsProps,
+      "onPointerEnterCapture" | "onPointerLeaveCapture" | "placeholder"
+    > {
+    onPointerEnterCapture?: OriginalBreadcrumbsProps["onPointerEnterCapture"];
+    onPointerLeaveCapture?: OriginalBreadcrumbsProps["onPointerLeaveCapture"];
+    placeholder?: OriginalBreadcrumbsProps["placeholder"];
   }
 }
